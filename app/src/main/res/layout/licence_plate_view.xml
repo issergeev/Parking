@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/layoutMargin"
+    android:orientation="horizontal"
+    android:background="@color/colorPrimary">
+
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:src="@drawable/car"/>
+
+    <EditText
+        android:id="@+id/carName"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/image"
+        android:inputType="text"
+        android:hint="@string/car_name"
+        android:maxLength="20"
+        android:background="@drawable/buttons_shape"/>
+
+    <EditText
+        android:id="@+id/carID"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@id/carName"
+        android:inputType="text"
+        android:hint="@string/car_id"
+        android:maxLength="12"
+        android:textSize="35sp"
+        android:gravity="center"
+        android:background="@drawable/buttons_shape"/>
+
+    <!--Spinner-->
+    <RelativeLayout
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/carID"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/spinner_background"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:id="@+id/spinner2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:layout_marginStart="5dp"
+            android:spinnerMode="dropdown"/>
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:src="@drawable/drop"/>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinner"
+        android:text="@string/add"
+        android:textColor="@color/colorPrimaryDark"
+        android:background="@drawable/green_buttons_shape"/>
+</RelativeLayout>

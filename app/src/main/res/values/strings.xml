@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Parking</string>
+    <string name="hello">Welcome to Parking!</string>
+    <string name="help">To move tabs just scroll them</string>
+    <string name="go">Get started!</string>
+    <string name="fill">All fields required not to be empty!</string>
+    <string name="check">Please, make sure all fields have the correct input!</string>
+
+    //GUI
+    <string name="name">First Name</string>
+    <string name="date">Date of Birth</string>
+    <string name="next">Next</string>
+    <string name="age_pickness">Date of Birth</string>
+    <string name="car_name">Car name</string>
+    <string name="car_id">O 123 OO 777</string>
+    <string name="add">Add One More Car</string>
+    <string-array name="countries">
+        <item>Russian Federation</item>
+        <item>Republic of Belarus</item>
+        <item>Ukraine</item>
+        <item>Kazakhstan</item>
+    </string-array>
+</resources>

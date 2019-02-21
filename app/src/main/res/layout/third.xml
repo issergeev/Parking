@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/layoutMargin"
+        android:orientation="horizontal"
+        android:background="@drawable/buttons_shape">
+
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:src="@drawable/car"/>
+
+        <EditText
+            android:id="@+id/carName"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/image"
+            android:layout_marginBottom="10dp"
+            android:inputType="text"
+            android:hint="@string/car_name"
+            android:maxLength="20"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:background="@drawable/buttons_shape"/>
+
+        <EditText
+            android:id="@+id/carID"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@id/carName"
+            android:inputType="text"
+            android:hint="@string/car_id"
+            android:maxLength="12"
+            android:textSize="35sp"
+            android:gravity="center"
+            android:background="@drawable/buttons_shape"/>
+
+        <!--Spinner-->
+        <RelativeLayout
+            android:id="@+id/countriesSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/carID"
+            android:paddingEnd="1dp"
+            android:paddingStart="1dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/spinner_background"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:layout_marginStart="5dp"
+                android:spinnerMode="dropdown"/>
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:src="@drawable/drop"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

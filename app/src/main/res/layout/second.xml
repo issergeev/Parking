@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/second"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:padding="@dimen/layoutMargin">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/name"
+        android:layout_margin="70dp"
+        android:src="@drawable/parking"/>
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:hint="@string/name"
+        android:inputType="textPersonName"
+        android:textColorHint="@android:color/white"
+        android:textColor="@color/textColor"
+        android:gravity="center"/>
+
+    <Button
+        android:id="@+id/datePicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_below="@id/name"
+        android:background="@drawable/no_background_buttons_shape"
+        android:text="@string/date"
+        android:textColor="@android:color/white"/>
+
+    <Button
+        android:enabled="false"
+        android:id="@+id/next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/layoutMargin"
+        android:layout_marginEnd="@dimen/layoutMargin"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/buttons_shape"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:text="@string/next"
+        android:textColor="@color/inactiveTextColor"/>
+
+    <Button
+        android:id="@+id/nextHidden"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/layoutMargin"
+        android:layout_marginEnd="@dimen/layoutMargin"
+        android:layout_alignParentBottom="true"
+        android:background="#00FFFFFF"
+        android:layout_centerHorizontal="true"/>
+</RelativeLayout>

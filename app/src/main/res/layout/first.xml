@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/first"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:padding="@dimen/layoutMargin">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/imageMargin"
+        android:layout_above="@id/welcome"
+        android:src="@drawable/parking"/>
+
+    <TextView
+        android:id="@+id/welcome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/hello"
+        android:gravity="center"
+        android:textSize="35sp"
+        android:textColor="@color/textColor"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/welcome"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/avgMargin"
+            android:layout_marginEnd="@dimen/avgMargin"
+            android:background="@drawable/buttons_shape"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:text="@string/go"
+            android:textColor="@color/textColor"/>
+    </LinearLayout>
+</RelativeLayout>

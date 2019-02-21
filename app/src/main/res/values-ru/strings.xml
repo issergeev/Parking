@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Добро пожаловать!</string>
+    <string name="help">Для перемещения между вкладками используйте свайпы</string>
+    <string name="go">Начать!</string>
+    <string name="fill">Все поля должны быть заполены!</string>
+    <string name="check">Пожалуйста, убедитесь, что поля заполены верно!</string>
+
+    //GUI
+    <string name="name">Имя</string>
+    <string name="date">Дата рождения</string>
+    <string name="next">Далее</string>
+    <string name="age_pickness">Дата рождения</string>
+    <string name="car_name">Название машины</string>
+    <string name="car_id">O 123 OO 777</string>
+    <string name="add">Добавить ТС</string>
+    <string-array name="countries">
+        <item>Российская Федерация</item>
+        <item>Республика Беларусь</item>
+        <item>Украина</item>
+        <item>Казахстан</item>
+    </string-array>
+</resources>
