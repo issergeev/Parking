@@ -14,6 +14,8 @@
     <string name="car_name">Car name</string>
     <string name="car_id">O 123 OO 777</string>
     <string name="add">Add One More Car</string>
+    <string name="no_template">Disable templates</string>
+    <string name="no_template_message">You can disable licence plate templates by long pressing on this field</string>
     <string-array name="countries">
         <item>Russian Federation</item>
         <item>Republic of Belarus</item>

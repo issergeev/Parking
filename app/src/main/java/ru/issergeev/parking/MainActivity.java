@@ -1,11 +1,16 @@
 package ru.issergeev.parking;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 
 import android.view.View;
@@ -29,9 +34,15 @@ public class MainActivity extends AppCompatActivity {
     private Spinner spinner;
     private Animation setInAnimation;
     private Animation setOutAnimation;
+    private AlertDialog.Builder alertDialog;
 
     private String[] countries;
     private int[] flags;
+
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
+    private static final String appData = "ParkingData";
+    private static final String firstStart = "FirstStart";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +87,45 @@ public class MainActivity extends AppCompatActivity {
                     myFlipper.setOutAnimation(setOutAnimation);
                     myFlipper.setInAnimation(setInAnimation);
                     myFlipper.showNext();
+                    preferences = getSharedPreferences(appData, MODE_PRIVATE);
+                    editor = preferences.edit();
+
+                    if (preferences.getBoolean(firstStart, true)) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            alertDialog = new AlertDialog.Builder(MainActivity.this,
+                                    android.R.style.Theme_Material_Dialog_Alert);
+                        } else {
+                            alertDialog = new AlertDialog.Builder(MainActivity.this);
+                        }
+                        alertDialog.setTitle(R.string.no_template)
+                                .setMessage(R.string.no_template_message)
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        editor.putBoolean(firstStart, false);
+                                    }
+                                })
+                                .setCancelable(true)
+                                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                                    @Override
+                                    public void onCancel(DialogInterface dialogInterface) {
+                                        editor.putBoolean(firstStart, false);
+                                        editor.apply();
+                                    }
+                                })
+                                .setIcon(R.drawable.conversation);
+
+                        final AlertDialog dialog = alertDialog.create();
+                        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                            @Override
+                            public void onShow(DialogInterface dialogInterface) {
+                                Button cancelButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+
+                                cancelButton.setTextColor(getResources()
+                                        .getColor(android.R.color.holo_green_light));
+                            }
+                        });
+                        dialog.show();
+                    }
                 } else {
                     Toast.makeText(MainActivity.this, R.string.check, Toast.LENGTH_SHORT).show();
                 }
