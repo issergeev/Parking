@@ -48,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences.Editor editor;
     private static final String appData = "ParkingData";
     private static final String firstStart = "FirstStart";
+    private static final String userName = " UserName";
+    private static final String userAge = " UserAge";
+    private static final String page = "Page";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +64,11 @@ public class MainActivity extends AppCompatActivity {
 
         myFlipper = findViewById(R.id.myFlipper);
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        int layouts[] = new int[]{ R.layout.first, R.layout.second, R.layout.third};
-        for (int layout : layouts)
+        int layouts[] = new int[]{R.layout.first, R.layout.second, R.layout.third};
+        for (int layout : layouts) {
+            assert inflater != null;
             myFlipper.addView(inflater.inflate(layout, null));
+        }
 
         button = findViewById(R.id.start);
         button.setOnClickListener(allEventsListener);
@@ -90,34 +95,25 @@ public class MainActivity extends AppCompatActivity {
         CountriesAdapter countriesAdapter = new CountriesAdapter(MainActivity.this, countries, flags);
         spinner.setAdapter(countriesAdapter);
         spinner.setOnItemSelectedListener(allEventsListener);
+
+        preferences = getSharedPreferences(appData, MODE_PRIVATE);
+        editor = preferences.edit();
+
+        myFlipper.setDisplayedChild(preferences.getInt(page, 0));
+        name.setText(preferences.getString(userName, ""));
+        datePicker.setText(preferences.getString(userAge, getResources().getString(R.string.age_pickness)));
     }
 
-//    private boolean dateComparator(long Date1, long Date2) {
-//        correctDate = false;
-//        if (Date2 - Date1 > 0) {
-//            Log.d("date", "Date2 = " + Date2 + ", Date1 = " + Date1 + "; 2 - 1 = " + String.valueOf(Date2 - Date1));
-//            return true;
-//        }
-//        else {
-//            Log.d("date", "Date2 = " + Date2 + ", Date1 = " + Date1 + "; 2 - 1 = " + String.valueOf(Date2 - Date1));
-//            return false;
-//        }
-//    }
     private boolean dateComparator(int[] current, int[] selected) {
         correctDate = false;
 
-        Log.d("date", "current = " + Arrays.toString(current) + " selected = " + Arrays.toString(selected));
-
-        if (current[0] - selected[0] > 0) { //2010 - 2005
-            Log.d("date", String.valueOf(current[0] - selected[0]));
+        if (current[0] - selected[0] > 0) {
             return true;
         } else if (current[0] - selected[0] == 0) {
-            if (current[1] - selected[1] > 0) { //5 - 1
-                Log.d("date", String.valueOf(current[1] - selected[1]));
+            if (current[1] - selected[1] > 0) {
                 return true;
             } else if (current[1] - selected[1] == 0) {
-                if (current[2] - selected[2] > 0) { //31 - 1
-                    Log.d("date", String.valueOf(current[2] - selected[2]));
+                if (current[2] - selected[2] > 0) {
                     return true;
                 }
             }
@@ -145,6 +141,15 @@ public class MainActivity extends AppCompatActivity {
         public float getInterpolation(float paramFloat) {
             return Math.abs(paramFloat - 1f);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        editor.putString(userName, name.getText().toString());
+        editor.putString(userAge, datePicker.getText().toString());
+        editor.putInt(page, myFlipper.getDisplayedChild());
+        editor.apply();
+        super.onDestroy();
     }
 
     //DatePicker class
@@ -191,6 +196,8 @@ public class MainActivity extends AppCompatActivity {
                     Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
         }
         datePickerDialog.show();
+
+
     }
 
     private class AllEventsListener implements View.OnClickListener, TextWatcher, AdapterView.OnItemSelectedListener {
@@ -244,10 +251,6 @@ public class MainActivity extends AppCompatActivity {
                     myFlipper.showNext();
                     break;
                 case R.id.nextHidden :
-//                    String[] rawDate = datePicker.getText().toString().split("-");
-//                    int[] selectedDate = new int[] {Integer.valueOf(rawDate[2]), Integer.valueOf(rawDate[1]), Integer.valueOf(rawDate[0])};
-//                    int[] currentDate = new int[] {Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH) + 1, Calendar.getInstance().get(Calendar.YEAR)};
-
                     if (!next.isEnabled())
                         Toast.makeText(MainActivity.this, R.string.fill, Toast.LENGTH_SHORT).show();
                     else if (correctDate) {
@@ -256,8 +259,6 @@ public class MainActivity extends AppCompatActivity {
                         myFlipper.setOutAnimation(setOutAnimation);
                         myFlipper.setInAnimation(setInAnimation);
                         myFlipper.showNext();
-                        preferences = getSharedPreferences(appData, MODE_PRIVATE);
-                        editor = preferences.edit();
 
                         if (preferences.getBoolean(firstStart, true)) {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
