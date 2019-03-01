@@ -15,7 +15,7 @@
     <string name="car_id">O 123 OO 777</string>
     <string name="add">Добавить ТС</string>
     <string name="no_template">Отключить маску ввода</string>
-    <string name="no_template_message">Долго удерживайте поле ввода номера автомобиля, чтобы отключить шаблон ввода</string>
+    <string name="no_template_message">Долго удерживайте поле номера автомобиля, чтобы отключить шаблон ввода</string>
     <string-array name="countries">
         <item>Российская Федерация</item>
         <item>Республика Беларусь</item>

@@ -25,9 +25,13 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
+    private AllEventsListener allEventsListener;
+
     private ViewFlipper myFlipper;
     private Button button, next, nextHidden, datePicker;
     private EditText name;
@@ -38,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String[] countries;
     private int[] flags;
+    private boolean correctDate;
 
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
@@ -49,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        allEventsListener = new AllEventsListener();
+
         setInAnimation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.in);
         setOutAnimation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.out);
 
@@ -59,111 +66,18 @@ public class MainActivity extends AppCompatActivity {
             myFlipper.addView(inflater.inflate(layout, null));
 
         button = findViewById(R.id.start);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setInAnimation.setInterpolator(null);
-                setOutAnimation.setInterpolator(null);
-                myFlipper.setOutAnimation(setOutAnimation);
-                myFlipper.setInAnimation(setInAnimation);
-                myFlipper.showNext();
-            }
-        });
+        button.setOnClickListener(allEventsListener);
 
         next = findViewById(R.id.next);
         nextHidden = findViewById(R.id.nextHidden);
-        nextHidden.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String[] date = datePicker.getText().toString().split("-");
-
-                if (!next.isEnabled())
-                    Toast.makeText(MainActivity.this, R.string.fill, Toast.LENGTH_SHORT).show();
-                else if (dateComparator(Long.valueOf(date[2] + date[1] + date[0]), Long.valueOf(Calendar.getInstance().get(Calendar.YEAR)
-                                                                                    + "" + (Calendar.getInstance().get(Calendar.MONTH) + 1)
-                                                                                    + "" + Calendar.getInstance().get(Calendar.DAY_OF_MONTH)))) {
-                    setInAnimation.setInterpolator(null);
-                    setOutAnimation.setInterpolator(null);
-                    myFlipper.setOutAnimation(setOutAnimation);
-                    myFlipper.setInAnimation(setInAnimation);
-                    myFlipper.showNext();
-                    preferences = getSharedPreferences(appData, MODE_PRIVATE);
-                    editor = preferences.edit();
-
-                    if (preferences.getBoolean(firstStart, true)) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            alertDialog = new AlertDialog.Builder(MainActivity.this,
-                                    android.R.style.Theme_Material_Dialog_Alert);
-                        } else {
-                            alertDialog = new AlertDialog.Builder(MainActivity.this);
-                        }
-                        alertDialog.setTitle(R.string.no_template)
-                                .setMessage(R.string.no_template_message)
-                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        editor.putBoolean(firstStart, false);
-                                    }
-                                })
-                                .setCancelable(true)
-                                .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                                    @Override
-                                    public void onCancel(DialogInterface dialogInterface) {
-                                        editor.putBoolean(firstStart, false);
-                                        editor.apply();
-                                    }
-                                })
-                                .setIcon(R.drawable.conversation);
-
-                        final AlertDialog dialog = alertDialog.create();
-                        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-                            @Override
-                            public void onShow(DialogInterface dialogInterface) {
-                                Button cancelButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-
-                                cancelButton.setTextColor(getResources()
-                                        .getColor(android.R.color.holo_green_light));
-                            }
-                        });
-                        dialog.show();
-                    }
-                } else {
-                    Toast.makeText(MainActivity.this, R.string.check, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        nextHidden.setOnClickListener(allEventsListener);
 
         datePicker = findViewById(R.id.datePicker);
-        datePicker.setText(new StringBuilder().append(Calendar.getInstance().get(Calendar.DAY_OF_MONTH))
-                .append("-")
-                .append(Calendar.getInstance().get(Calendar.MONTH) + 1)
-                .append("-")
-                .append(Calendar.getInstance().get(Calendar.YEAR)));
-        datePicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDatePickerDialog(datePicker.getText().toString());
-            }
-        });
+        datePicker.setOnClickListener(allEventsListener);
+        datePicker.addTextChangedListener(allEventsListener);
 
         name = findViewById(R.id.name);
-        name.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (name.getText().toString().trim().length() > 1) {
-                    next.setEnabled(true);
-                    next.setTextColor(getResources().getColor(R.color.textColor));
-                } else{
-                    next.setEnabled(false);
-                    next.setTextColor(getResources().getColor(R.color.inactiveTextColor));
-                }
-            }
-        });
+        name.addTextChangedListener(allEventsListener);
 
         spinner = findViewById(R.id.spinner);
         countries = getResources().getStringArray(R.array.countries);
@@ -175,21 +89,40 @@ public class MainActivity extends AppCompatActivity {
         };
         CountriesAdapter countriesAdapter = new CountriesAdapter(MainActivity.this, countries, flags);
         spinner.setAdapter(countriesAdapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(MainActivity.this, countries[i], Toast.LENGTH_SHORT).show();
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
-        });
+        spinner.setOnItemSelectedListener(allEventsListener);
     }
 
-    private boolean dateComparator(long Date1, long Date2) {
-        if (Date2 - Date1 > 0)
+//    private boolean dateComparator(long Date1, long Date2) {
+//        correctDate = false;
+//        if (Date2 - Date1 > 0) {
+//            Log.d("date", "Date2 = " + Date2 + ", Date1 = " + Date1 + "; 2 - 1 = " + String.valueOf(Date2 - Date1));
+//            return true;
+//        }
+//        else {
+//            Log.d("date", "Date2 = " + Date2 + ", Date1 = " + Date1 + "; 2 - 1 = " + String.valueOf(Date2 - Date1));
+//            return false;
+//        }
+//    }
+    private boolean dateComparator(int[] current, int[] selected) {
+        correctDate = false;
+
+        Log.d("date", "current = " + Arrays.toString(current) + " selected = " + Arrays.toString(selected));
+
+        if (current[0] - selected[0] > 0) { //2010 - 2005
+            Log.d("date", String.valueOf(current[0] - selected[0]));
             return true;
-        else
-            return false;
+        } else if (current[0] - selected[0] == 0) {
+            if (current[1] - selected[1] > 0) { //5 - 1
+                Log.d("date", String.valueOf(current[1] - selected[1]));
+                return true;
+            } else if (current[1] - selected[1] == 0) {
+                if (current[2] - selected[2] > 0) { //31 - 1
+                    Log.d("date", String.valueOf(current[2] - selected[2]));
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override
@@ -222,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
         if (Character.isDigit(currentDate.charAt(0))) {
             String[] split = currentDate.split("-");
             int day = Integer.valueOf(split[0]);
-            final int month = Integer.valueOf(split[1]) - 1;
+            int month = Integer.valueOf(split[1]) - 1;
             int year = Integer.valueOf(split[2]);
 
             dateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -258,5 +191,126 @@ public class MainActivity extends AppCompatActivity {
                     Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
         }
         datePickerDialog.show();
+    }
+
+    private class AllEventsListener implements View.OnClickListener, TextWatcher, AdapterView.OnItemSelectedListener {
+
+        //TextWatcher
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            if (name.getText().toString().trim().length() > 1 && Character.isDigit(datePicker.getText().toString().charAt(0))) {
+                next.setEnabled(true);
+                next.setTextColor(getResources().getColor(R.color.textColor));
+            } else {
+                next.setEnabled(false);
+                next.setTextColor(getResources().getColor(R.color.inactiveTextColor));
+            }
+
+            if (name.getText().toString().trim().length() > 1)
+                name.setTextColor(getResources().getColor(R.color.textColor));
+            else
+                name.setTextColor(getResources().getColor(android.R.color.holo_red_light));
+
+            //Split to different TextWatcher
+            if (Character.isDigit(datePicker.getText().toString().charAt(0))) {
+                String[] rawDate = datePicker.getText().toString().split("-");
+                int[] selectedDate = new int[]{Integer.valueOf(rawDate[2]), Integer.valueOf(rawDate[1]), Integer.valueOf(rawDate[0])};
+                int[] currentDate = new int[]{Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH) + 1, Calendar.getInstance().get(Calendar.DAY_OF_MONTH)};
+
+                correctDate = dateComparator(currentDate, selectedDate);
+
+                if (correctDate)
+                    datePicker.setTextColor(getResources().getColor(R.color.textColor));
+                else
+                    datePicker.setTextColor(getResources().getColor(android.R.color.holo_red_light));
+            }
+        }
+
+        //OnClick
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.start :
+                    setInAnimation.setInterpolator(null);
+                    setOutAnimation.setInterpolator(null);
+                    myFlipper.setOutAnimation(setOutAnimation);
+                    myFlipper.setInAnimation(setInAnimation);
+                    myFlipper.showNext();
+                    break;
+                case R.id.nextHidden :
+//                    String[] rawDate = datePicker.getText().toString().split("-");
+//                    int[] selectedDate = new int[] {Integer.valueOf(rawDate[2]), Integer.valueOf(rawDate[1]), Integer.valueOf(rawDate[0])};
+//                    int[] currentDate = new int[] {Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH) + 1, Calendar.getInstance().get(Calendar.YEAR)};
+
+                    if (!next.isEnabled())
+                        Toast.makeText(MainActivity.this, R.string.fill, Toast.LENGTH_SHORT).show();
+                    else if (correctDate) {
+                        setInAnimation.setInterpolator(null);
+                        setOutAnimation.setInterpolator(null);
+                        myFlipper.setOutAnimation(setOutAnimation);
+                        myFlipper.setInAnimation(setInAnimation);
+                        myFlipper.showNext();
+                        preferences = getSharedPreferences(appData, MODE_PRIVATE);
+                        editor = preferences.edit();
+
+                        if (preferences.getBoolean(firstStart, true)) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                alertDialog = new AlertDialog.Builder(MainActivity.this,
+                                        android.R.style.Theme_Material_Dialog_Alert);
+                            } else {
+                                alertDialog = new AlertDialog.Builder(MainActivity.this);
+                            }
+                            alertDialog.setTitle(R.string.no_template)
+                                    .setMessage(R.string.no_template_message)
+                                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            editor.putBoolean(firstStart, false);
+                                            editor.apply();
+                                        }
+                                    })
+                                    .setCancelable(true)
+                                    .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                                        @Override
+                                        public void onCancel(DialogInterface dialogInterface) {
+                                            editor.putBoolean(firstStart, false);
+                                            editor.apply();
+                                        }
+                                    })
+                                    .setIcon(R.drawable.conversation);
+
+                            final AlertDialog dialog = alertDialog.create();
+                            dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                                @Override
+                                public void onShow(DialogInterface dialogInterface) {
+                                    Button cancelButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+
+                                    cancelButton.setTextColor(getResources()
+                                            .getColor(android.R.color.holo_green_light));
+                                }
+                            });
+                            dialog.show();
+                        }
+                    } else {
+                        Toast.makeText(MainActivity.this, R.string.check, Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                case R.id.datePicker :
+                    showDatePickerDialog(datePicker.getText().toString());
+                    break;
+            }
+        }
+
+        @Override
+        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            Toast.makeText(MainActivity.this, countries[i], Toast.LENGTH_SHORT).show();
+        }
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {}
     }
 }
