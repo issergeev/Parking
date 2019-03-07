@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_above="@id/name"
-        android:layout_margin="70dp"
+        android:layout_margin="@dimen/imageMargin"
         android:src="@drawable/parking"/>
 
     <EditText

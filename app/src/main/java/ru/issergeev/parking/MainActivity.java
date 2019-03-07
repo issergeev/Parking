@@ -6,8 +6,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -25,23 +27,31 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private List<Cars> carsList;
+
+    private CarsAdapter carsAdapter;
+
     private AllEventsListener allEventsListener;
 
+    private RecyclerView recyclerView;
     private ViewFlipper myFlipper;
     private Button button, next, nextHidden, datePicker;
+    private FloatingActionButton actionButton;
     private EditText name;
     private Spinner spinner;
     private Animation setInAnimation;
     private Animation setOutAnimation;
     private AlertDialog.Builder alertDialog;
 
-    private String[] countries;
-    private int[] flags;
+//    private String[] countries;
+//    private int[] flags;
     private boolean correctDate;
 
     private SharedPreferences preferences;
@@ -70,6 +80,12 @@ public class MainActivity extends AppCompatActivity {
             myFlipper.addView(inflater.inflate(layout, null));
         }
 
+        carsList = new ArrayList<>();
+        carsAdapter = new CarsAdapter(this, carsList);
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setAdapter(carsAdapter);
+        carsList.add(new Cars());
+
         button = findViewById(R.id.start);
         button.setOnClickListener(allEventsListener);
 
@@ -85,23 +101,43 @@ public class MainActivity extends AppCompatActivity {
         name.addTextChangedListener(allEventsListener);
 
         spinner = findViewById(R.id.spinner);
-        countries = getResources().getStringArray(R.array.countries);
-        flags = new int[]{
-                R.drawable.ru,
-                R.drawable.by,
-                R.drawable.ua,
-                R.drawable.kz
-        };
-        CountriesAdapter countriesAdapter = new CountriesAdapter(MainActivity.this, countries, flags);
-        spinner.setAdapter(countriesAdapter);
-        spinner.setOnItemSelectedListener(allEventsListener);
+//        countries = getResources().getStringArray(R.array.countries);
+//        flags = new int[]{
+//                R.drawable.ru,
+//                R.drawable.by,
+//                R.drawable.ua,
+//                R.drawable.kz
+//        };
+//        CountriesAdapter countriesAdapter = new CountriesAdapter(MainActivity.this, countries, flags);
+//        spinner.setAdapter(countriesAdapter);
+//        spinner.setOnItemSelectedListener(allEventsListener);
 
         preferences = getSharedPreferences(appData, MODE_PRIVATE);
         editor = preferences.edit();
 
+        //DELETE after test
+        editor.putBoolean(firstStart, true);
+        editor.apply();
+        //END
+
         myFlipper.setDisplayedChild(preferences.getInt(page, 0));
         name.setText(preferences.getString(userName, ""));
         datePicker.setText(preferences.getString(userAge, getResources().getString(R.string.age_pickness)));
+
+        actionButton = findViewById(R.id.actionButton);
+        actionButton.setOnClickListener(allEventsListener);
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0)
+                    actionButton.hide();
+                else
+                    actionButton.show();
+
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
     }
 
     private boolean dateComparator(int[] current, int[] selected) {
@@ -196,8 +232,6 @@ public class MainActivity extends AppCompatActivity {
                     Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
         }
         datePickerDialog.show();
-
-
     }
 
     private class AllEventsListener implements View.OnClickListener, TextWatcher, AdapterView.OnItemSelectedListener {
@@ -279,7 +313,7 @@ public class MainActivity extends AppCompatActivity {
                                     .setOnCancelListener(new DialogInterface.OnCancelListener() {
                                         @Override
                                         public void onCancel(DialogInterface dialogInterface) {
-                                            editor.putBoolean(firstStart, false);
+                                            editor.putBoolean(firstStart, true);
                                             editor.apply();
                                         }
                                     })
@@ -304,12 +338,15 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.datePicker :
                     showDatePickerDialog(datePicker.getText().toString());
                     break;
+                case R.id.actionButton :
+                    carsList.add(new Cars());
+                    carsAdapter.notifyDataSetChanged();
             }
         }
 
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            Toast.makeText(MainActivity.this, countries[i], Toast.LENGTH_SHORT).show();
+//            Toast.makeText(MainActivity.this, countries[i], Toast.LENGTH_SHORT).show();
         }
         @Override
         public void onNothingSelected(AdapterView<?> adapterView) {}

@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Parking</string>
     <string name="hello">Добро пожаловать!</string>
     <string name="help">Для перемещения между вкладками используйте свайпы</string>
     <string name="go">Начать!</string>
     <string name="fill">Все поля должны быть заполены!</string>
     <string name="check">Пожалуйста, убедитесь, что поля заполены верно!</string>
+    <string name="no_hint">Маска ввода отключена</string>
+    <string name="undo">Отмена</string>
 
     //GUI
     <string name="name">Имя</string>
     <string name="date">Дата рождения</string>
     <string name="next">Далее</string>
+    <string name="deleteCar">Удалить</string>
     <string name="age_pickness">Дата рождения</string>
     <string name="car_name">Название машины</string>
     <string name="car_id">O 123 OO 777</string>
+    <string name="licence_plate">Номер машины</string>
     <string name="add">Добавить ТС</string>
     <string name="no_template">Отключить маску ввода</string>
     <string name="no_template_message">Долго удерживайте поле номера автомобиля, чтобы отключить шаблон ввода</string>
