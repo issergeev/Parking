@@ -12,6 +12,7 @@
     <string name="name">First Name</string>
     <string name="date">Date of Birth</string>
     <string name="next">Next</string>
+    <string name="finish">Finish</string>
     <string name="deleteCar">Delete</string>
     <string name="age_pickness">Date of Birth</string>
     <string name="car_name">Car name</string>

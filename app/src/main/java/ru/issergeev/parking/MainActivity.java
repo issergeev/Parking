@@ -28,21 +28,18 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private List<Cars> carsList;
-
     private CarsAdapter carsAdapter;
 
     private AllEventsListener allEventsListener;
 
     private RecyclerView recyclerView;
     private ViewFlipper myFlipper;
-    private Button button, next, nextHidden, datePicker;
+    private Button button, next, nextHidden, finish, datePicker;
     private FloatingActionButton actionButton;
     private EditText name;
     private Spinner spinner;
@@ -50,8 +47,10 @@ public class MainActivity extends AppCompatActivity {
     private Animation setOutAnimation;
     private AlertDialog.Builder alertDialog;
 
-//    private String[] countries;
-//    private int[] flags;
+    String[] rawDate;
+    int[] selectedDate;
+    int[] currentDate;
+
     private boolean correctDate;
 
     private SharedPreferences preferences;
@@ -85,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setAdapter(carsAdapter);
         carsList.add(new Cars());
+        carsAdapter.notifyItemInserted(carsList.size());
 
         button = findViewById(R.id.start);
         button.setOnClickListener(allEventsListener);
@@ -101,16 +101,6 @@ public class MainActivity extends AppCompatActivity {
         name.addTextChangedListener(allEventsListener);
 
         spinner = findViewById(R.id.spinner);
-//        countries = getResources().getStringArray(R.array.countries);
-//        flags = new int[]{
-//                R.drawable.ru,
-//                R.drawable.by,
-//                R.drawable.ua,
-//                R.drawable.kz
-//        };
-//        CountriesAdapter countriesAdapter = new CountriesAdapter(MainActivity.this, countries, flags);
-//        spinner.setAdapter(countriesAdapter);
-//        spinner.setOnItemSelectedListener(allEventsListener);
 
         preferences = getSharedPreferences(appData, MODE_PRIVATE);
         editor = preferences.edit();
@@ -138,6 +128,15 @@ public class MainActivity extends AppCompatActivity {
                 super.onScrolled(recyclerView, dx, dy);
             }
         });
+
+        rawDate = datePicker.getText().toString().split("-");
+        selectedDate = new int[]{Integer.valueOf(rawDate[2]), Integer.valueOf(rawDate[1]), Integer.valueOf(rawDate[0])};
+        currentDate = new int[]{Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH) + 1, Calendar.getInstance().get(Calendar.DAY_OF_MONTH)};
+
+        correctDate = dateComparator(currentDate, selectedDate);
+
+        finish = findViewById(R.id.finish);
+        finish.setOnClickListener(allEventsListener);
     }
 
     private boolean dateComparator(int[] current, int[] selected) {
@@ -154,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+
         return false;
     }
 
@@ -245,7 +245,22 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void afterTextChanged(Editable editable) {
-            if (name.getText().toString().trim().length() > 1 && Character.isDigit(datePicker.getText().toString().charAt(0))) {
+            //Split to different TextWatcher
+            if (Character.isDigit(datePicker.getText().toString().charAt(0))) {
+                rawDate = datePicker.getText().toString().split("-");
+                selectedDate = new int[]{Integer.valueOf(rawDate[2]), Integer.valueOf(rawDate[1]), Integer.valueOf(rawDate[0])};
+                currentDate = new int[]{Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH) + 1, Calendar.getInstance().get(Calendar.DAY_OF_MONTH)};
+
+                correctDate = dateComparator(currentDate, selectedDate);
+
+                if (correctDate)
+                    datePicker.setTextColor(getResources().getColor(R.color.textColor));
+                else
+                    datePicker.setTextColor(getResources().getColor(android.R.color.holo_red_light));
+            }
+
+            //Split to different TextWatcher
+            if (name.getText().toString().trim().length() > 1 && correctDate) {
                 next.setEnabled(true);
                 next.setTextColor(getResources().getColor(R.color.textColor));
             } else {
@@ -257,20 +272,6 @@ public class MainActivity extends AppCompatActivity {
                 name.setTextColor(getResources().getColor(R.color.textColor));
             else
                 name.setTextColor(getResources().getColor(android.R.color.holo_red_light));
-
-            //Split to different TextWatcher
-            if (Character.isDigit(datePicker.getText().toString().charAt(0))) {
-                String[] rawDate = datePicker.getText().toString().split("-");
-                int[] selectedDate = new int[]{Integer.valueOf(rawDate[2]), Integer.valueOf(rawDate[1]), Integer.valueOf(rawDate[0])};
-                int[] currentDate = new int[]{Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH) + 1, Calendar.getInstance().get(Calendar.DAY_OF_MONTH)};
-
-                correctDate = dateComparator(currentDate, selectedDate);
-
-                if (correctDate)
-                    datePicker.setTextColor(getResources().getColor(R.color.textColor));
-                else
-                    datePicker.setTextColor(getResources().getColor(android.R.color.holo_red_light));
-            }
         }
 
         //OnClick
@@ -285,9 +286,9 @@ public class MainActivity extends AppCompatActivity {
                     myFlipper.showNext();
                     break;
                 case R.id.nextHidden :
-                    if (!next.isEnabled())
+                    if (!next.isEnabled() && name.getText().toString().trim().length() == 0)
                         Toast.makeText(MainActivity.this, R.string.fill, Toast.LENGTH_SHORT).show();
-                    else if (correctDate) {
+                    else if (correctDate && name.getText().toString().trim().length() >= 2) {
                         setInAnimation.setInterpolator(null);
                         setOutAnimation.setInterpolator(null);
                         myFlipper.setOutAnimation(setOutAnimation);
@@ -340,14 +341,18 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.actionButton :
                     carsList.add(new Cars());
-                    carsAdapter.notifyDataSetChanged();
+                    carsAdapter.notifyItemInserted(carsAdapter.getItemCount());
+                    break;
+                case R.id.finish :
+                    for (Cars cars : carsList) {
+                        if (cars.getName()!= null && cars.getName().length() > 0)
+                            Log.i("list", cars.getCountry());
+                    }
             }
         }
 
         @Override
-        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//            Toast.makeText(MainActivity.this, countries[i], Toast.LENGTH_SHORT).show();
-        }
+        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {}
         @Override
         public void onNothingSelected(AdapterView<?> adapterView) {}
     }

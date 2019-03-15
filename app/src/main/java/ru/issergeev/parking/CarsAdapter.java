@@ -3,7 +3,11 @@ package ru.issergeev.parking;
 import android.content.Context;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +15,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -34,21 +39,42 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
 
     @Override
     public CarsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         View view = inflater.inflate(R.layout.car_layout, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(CarsAdapter.ViewHolder holder, final int position) {
-        Cars car = cars.get(position);
+    public void onBindViewHolder(final CarsAdapter.ViewHolder holder, final int position) {
+        final Cars car = cars.get(position);
 
         holder.button.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 cars.remove(holder.getAdapterPosition());
+                 notifyItemRemoved(holder.getAdapterPosition());
+                 notifyItemRangeChanged(holder.getAdapterPosition(), getItemCount());
+            }
+        });
+
+        holder.isHint = true;
+        holder.name.setText("");
+        holder.licencePlate.setHint(RUS);
+        holder.licencePlate.setText("");
+        holder.licencePlate.setTextSize(35f);
+        holder.country.setSelection(0);
+
+        holder.name.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View view) {
-                cars.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, cars.size());
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                cars.get(holder.getAdapterPosition()).setName(holder.name.getText().toString().trim());
+                cars.get(holder.getAdapterPosition()).setLicence_plate(holder.licencePlate.getText().toString().trim());
+
             }
         });
     }
@@ -101,7 +127,11 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
                             hint = KAZ;
                     }
 
+//                    cars.get(holder.getAdapterPosition()).setCountry(holder.itemView.getResources().getStringArray(R.array.countries)[holder.country.getSelectedItemPosition()]);
+                    cars.get(getAdapterPosition()).setCountry(view.getResources().getStringArray(R.array.countries)[country.getSelectedItemPosition()]);
+
                     licencePlate.setHint(hint);
+//                    Log.i("list", String.valueOf(adapterView.getSelectedItemPosition()));
                 }
 
                 @Override
@@ -110,7 +140,7 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
 
             licencePlate.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public boolean onLongClick(View view) {
+                public boolean onLongClick(final View view) {
                     if (isHint) {
                         licencePlate.setHint(view.getResources().getString(R.string.licence_plate));
                         licencePlate.setTextSize(25f);
@@ -142,25 +172,27 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
                                 .setAction(view.getResources().getString(R.string.undo), new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        position = country.getSelectedItemPosition();
+                                        try {
+                                            position = country.getSelectedItemPosition();
 
-                                        switch (position) {
-                                            case 0:
-                                                hint = RUS;
-                                                break;
-                                            case 1:
-                                                hint = BEL;
-                                                break;
-                                            case 2:
-                                                hint = UKR;
-                                                break;
-                                            case 3:
-                                                hint = KAZ;
-                                        }
+                                            switch (position) {
+                                                case 0:
+                                                    hint = RUS;
+                                                    break;
+                                                case 1:
+                                                    hint = BEL;
+                                                    break;
+                                                case 2:
+                                                    hint = UKR;
+                                                    break;
+                                                case 3:
+                                                    hint = KAZ;
+                                            }
 
-                                        licencePlate.setHint(hint);
-                                        licencePlate.setTextSize(35f);
-                                        isHint = true;
+                                            licencePlate.setHint(hint);
+                                            licencePlate.setTextSize(35f);
+                                            isHint = true;
+                                        } catch (NullPointerException e){}
                                     }
                                 });
                         snackbar.setActionTextColor(view.getResources().getColor(R.color.colorAccent));
@@ -172,14 +204,4 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
             });
         }
     }
-
-//    private class EventsListener implements AdapterView.OnItemSelectedListener {
-//        @Override
-//        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//            Toast.makeText(view.getContext(), countries[i], Toast.LENGTH_SHORT).show();
-//        }
-//
-//        @Override
-//        public void onNothingSelected(AdapterView<?> adapterView) {}
-//    }
 }

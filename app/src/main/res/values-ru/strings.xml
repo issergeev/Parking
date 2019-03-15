@@ -13,6 +13,7 @@
     <string name="name">Имя</string>
     <string name="date">Дата рождения</string>
     <string name="next">Далее</string>
+    <string name="finish">Завершить</string>
     <string name="deleteCar">Удалить</string>
     <string name="age_pickness">Дата рождения</string>
     <string name="car_name">Название машины</string>
