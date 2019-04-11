@@ -28,4 +28,26 @@
         <item>Украина</item>
         <item>Казахстан</item>
     </string-array>
+    <string name="payment">Оплата парковки</string>
+    <string name="parkingNumber">Номер парковки</string>
+    <string name="pay">Оплатить</string>
+    <string name="myGarage">Мой гараж</string>
+    <string name="no_cars">Машины не добавлены</string>
+    <string name="no_cars_message">Не добавлено ни одной машины. Вы хотите продолжить?</string>
+    <string name="no_car_name">Одному из транспортных средств не присвоено имя</string>
+    <string name="no_licence_plate">У одного из транспортных средств отсутствует номер</string>
+
+    //Navigation Drawer
+    <string name="title_activity_main_page">Главная</string>
+    <string name="navigation_drawer_open">Открыть панель навигации</string>
+    <string name="navigation_drawer_close">Закрыть панель навигации</string>
+    <string name="nav_header_title">Name</string>
+    <string name="nav_header_subtitle">LastName</string>
+    <string name="nav_header_desc">Заголовок</string>
+    <string name="action_settings">Настройки</string>
+
+    //Menu into Navigation Drawer
+    <string name="primary">Главная</string>
+    <string name="garage">Мой гараж</string>
+    <string name="map">Карта</string>
 </resources>

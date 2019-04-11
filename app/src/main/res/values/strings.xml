@@ -7,6 +7,8 @@
     <string name="check">Please, make sure all fields have the correct input!</string>
     <string name="no_hint">Input mask disabled</string>
     <string name="undo">Undo</string>
+    <string name="no_cars">Cars not founded</string>
+    <string name="no_cars_message">There are no cars added. Would you like to continue?</string>
 
     //GUI
     <string name="name">First Name</string>
@@ -27,4 +29,24 @@
         <item>Ukraine</item>
         <item>Kazakhstan</item>
     </string-array>
+    <string name="payment">Pay for parking</string>
+    <string name="parkingNumber">Parking number</string>
+    <string name="pay">Pay</string>
+    <string name="myGarage">My garage</string>
+    <string name="no_car_name">Some car does not have a name</string>
+    <string name="no_licence_plate">Some car does not have a licence plate</string>
+
+    //Navigation Drawer
+    <string name="title_activity_main_page">MainPage</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Name</string>
+    <string name="nav_header_subtitle">LastName</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    //Menu into Navigation Drawer
+    <string name="primary">Primary</string>
+    <string name="garage">Garage</string>
+    <string name="map">Map</string>
 </resources>

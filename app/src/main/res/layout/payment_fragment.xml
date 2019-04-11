@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".MainPage"
+    tools:showIn="@layout/app_bar_main_page"
+    android:padding="@dimen/layoutMargin"
+    android:orientation="vertical"
+    android:background="#F3DA37">
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/paymentInterface"
+        android:layout_marginBottom="10dp"
+        android:text="@string/payment"
+        android:textSize="30sp"
+        android:gravity="center"/>
+
+    <LinearLayout
+        android:id="@+id/paymentInterface"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/parkingNumber"
+            android:text="_ _ _ _"
+            android:textSize="30sp"
+            android:gravity="center"/>
+
+        <!--Spinner-->
+        <RelativeLayout
+            android:id="@+id/carSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingEnd="1dp"
+            android:paddingStart="1dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/spinner_background"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/spinner1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:layout_marginStart="5dp"
+                android:spinnerMode="dropdown"/>
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:src="@drawable/drop"/>
+        </RelativeLayout>
+
+        <!--Spinner-->
+        <RelativeLayout
+            android:id="@+id/hoursSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/carSpinner"
+            android:paddingEnd="1dp"
+            android:paddingStart="1dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/spinner_background"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/spinner2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:layout_marginStart="5dp"
+                android:spinnerMode="dropdown"/>
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:src="@drawable/drop"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/pay"
+        android:textSize="20sp"
+        android:textColor="@android:color/holo_green_light"
+        android:background="@drawable/green_buttons_shape"/>
+</RelativeLayout>

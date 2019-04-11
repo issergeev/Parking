@@ -33,14 +33,14 @@ public class SQLWorker {
     }
 
     //Function to INSERT new car into Database
-    public void insertCar(String car_name, String licence_plate, String country) {
+    public long insertCar(String car_name, String licence_plate, String country) {
         ContentValues values = new ContentValues();
 
         values.put(DB.getKeyName(), car_name);
         values.put(DB.getKeyLicencePlate(), licence_plate);
         values.put(DB.getKeyCountry(), country);
 
-        database.insert(DB.getTableCars(), null, values);
+        return database.insert(DB.getTableCars(), null, values);
     }
 
     //Function to UPDATE a car in Database

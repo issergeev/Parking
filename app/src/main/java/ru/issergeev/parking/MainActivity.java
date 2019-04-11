@@ -4,9 +4,12 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -32,6 +35,8 @@ import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private SQLWorker sqlWorker;
+
     private List<Cars> carsList;
     private CarsAdapter carsAdapter;
 
@@ -45,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private Spinner spinner;
     private Animation setInAnimation;
     private Animation setOutAnimation;
-    private AlertDialog.Builder alertDialog;
+    AlertDialog.Builder alertDialog;
 
     String[] rawDate;
     int[] selectedDate;
@@ -65,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        sqlWorker = new SQLWorker(this);
 
         allEventsListener = new AllEventsListener();
 
@@ -129,11 +136,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        rawDate = datePicker.getText().toString().split("-");
-        selectedDate = new int[]{Integer.valueOf(rawDate[2]), Integer.valueOf(rawDate[1]), Integer.valueOf(rawDate[0])};
-        currentDate = new int[]{Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH) + 1, Calendar.getInstance().get(Calendar.DAY_OF_MONTH)};
+        if (Character.isDigit(datePicker.getText().toString().charAt(0))) {
+            rawDate = datePicker.getText().toString().split("-");
+            selectedDate = new int[]{Integer.valueOf(rawDate[2]), Integer.valueOf(rawDate[1]), Integer.valueOf(rawDate[0])};
+            currentDate = new int[]{Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH) + 1, Calendar.getInstance().get(Calendar.DAY_OF_MONTH)};
 
-        correctDate = dateComparator(currentDate, selectedDate);
+            correctDate = dateComparator(currentDate, selectedDate);
+        }
 
         finish = findViewById(R.id.finish);
         finish.setOnClickListener(allEventsListener);
@@ -278,14 +287,14 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
-                case R.id.start :
+                case R.id.start:
                     setInAnimation.setInterpolator(null);
                     setOutAnimation.setInterpolator(null);
                     myFlipper.setOutAnimation(setOutAnimation);
                     myFlipper.setInAnimation(setInAnimation);
                     myFlipper.showNext();
                     break;
-                case R.id.nextHidden :
+                case R.id.nextHidden:
                     if (!next.isEnabled() && name.getText().toString().trim().length() == 0)
                         Toast.makeText(MainActivity.this, R.string.fill, Toast.LENGTH_SHORT).show();
                     else if (correctDate && name.getText().toString().trim().length() >= 2) {
@@ -336,18 +345,85 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, R.string.check, Toast.LENGTH_SHORT).show();
                     }
                     break;
-                case R.id.datePicker :
+                case R.id.datePicker:
                     showDatePickerDialog(datePicker.getText().toString());
                     break;
-                case R.id.actionButton :
+                case R.id.actionButton:
                     carsList.add(new Cars());
                     carsAdapter.notifyItemInserted(carsAdapter.getItemCount());
                     break;
-                case R.id.finish :
-                    for (Cars cars : carsList) {
-                        if (cars.getName()!= null && cars.getName().length() > 0)
-                            Log.i("list", cars.getCountry());
+                case R.id.finish:
+                    sqlWorker.open();
+
+                    int counter = 0;
+
+                    if (carsList.size() == 0) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            alertDialog = new AlertDialog.Builder(MainActivity.this, android.R.style.Theme_Material_Dialog_Alert);
+                        } else {
+                            alertDialog = new AlertDialog.Builder(MainActivity.this);
+                        }
+
+                        Log.d("log", "List == 0");
+
+                        alertDialog.setTitle(R.string.no_cars)
+                                .setMessage(R.string.no_cars_message)
+                                .setPositiveButton(R.string.next, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        startActivity(new Intent(MainActivity.this, MainPage.class));
+                                        finish();
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.cancel, null)
+                                .setCancelable(true)
+                                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                                    @Override
+                                    public void onCancel(DialogInterface dialogInterface) {
+                                        editor.putBoolean(firstStart, true);
+                                        editor.apply();
+                                    }
+                                })
+                                .setIcon(R.drawable.conversation);
+
+                        final AlertDialog dialog = alertDialog.create();
+                        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                            @Override
+                            public void onShow(DialogInterface dialogInterface) {
+                                Button nextButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                                Button cancelButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+
+                                nextButton.setTextColor(getResources()
+                                        .getColor(android.R.color.holo_red_light));
+                                cancelButton.setTextColor(getResources()
+                                        .getColor(android.R.color.holo_green_light));
+                            }
+                        });
+                        dialog.show();
+                    } else {
+                        for (Cars cars : carsList) {
+                            if (cars.getName() != null && cars.getName().length() != 0) {
+                                if (cars.getLicence_plate() != null && cars.getLicence_plate().length() != 0) {
+                                    counter++;
+                                } else {
+                                    Toast.makeText(MainActivity.this, R.string.no_licence_plate, Toast.LENGTH_SHORT).show();
+                                    Log.d("log", cars.getName());
+                                    break;
+                                }
+                            } else {
+                                Toast.makeText(MainActivity.this, R.string.no_car_name, Toast.LENGTH_SHORT).show();
+                                break;
+                            }
+                        }
+
+                        if (counter == carsList.size()) {
+                            for (Cars cars : carsList) {
+                                sqlWorker.insertCar(cars.getName(), cars.getLicence_plate(), cars.getCountry());
+                            }
+
+                            startActivity(new Intent(MainActivity.this, MainPage.class));
+                        }
                     }
+                    sqlWorker.close();
             }
         }
 

@@ -63,7 +63,7 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
         holder.licencePlate.setTextSize(35f);
         holder.country.setSelection(0);
 
-        holder.name.addTextChangedListener(new TextWatcher() {
+        TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
@@ -74,9 +74,11 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
             public void afterTextChanged(Editable editable) {
                 cars.get(holder.getAdapterPosition()).setName(holder.name.getText().toString().trim());
                 cars.get(holder.getAdapterPosition()).setLicence_plate(holder.licencePlate.getText().toString().trim());
-
             }
-        });
+        };
+
+        holder.name.addTextChangedListener(textWatcher);
+        holder.licencePlate.addTextChangedListener(textWatcher);
     }
 
     @Override
@@ -97,7 +99,7 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
         ViewHolder(View view){
             super(view);
             name = view.findViewById(R.id.carName);
-            licencePlate = view.findViewById(R.id.carID);
+            licencePlate = view.findViewById(R.id.licencePlate);
             country = view.findViewById(R.id.spinner);
             button = view.findViewById(R.id.deleteCar);
 
@@ -127,11 +129,9 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
                             hint = KAZ;
                     }
 
-//                    cars.get(holder.getAdapterPosition()).setCountry(holder.itemView.getResources().getStringArray(R.array.countries)[holder.country.getSelectedItemPosition()]);
                     cars.get(getAdapterPosition()).setCountry(view.getResources().getStringArray(R.array.countries)[country.getSelectedItemPosition()]);
 
                     licencePlate.setHint(hint);
-//                    Log.i("list", String.valueOf(adapterView.getSelectedItemPosition()));
                 }
 
                 @Override
