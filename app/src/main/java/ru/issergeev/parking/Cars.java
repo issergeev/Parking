@@ -5,6 +5,13 @@ public class Cars {
     private String licence_plate;
     private String country;
 
+    private String thumbnail;
+
+    Cars (String name, String licencePlate) {
+        this.name = name;
+        this.licence_plate = licencePlate;
+    }
+
     public String getName() {
         return name;
     }
@@ -27,5 +34,13 @@ public class Cars {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 }

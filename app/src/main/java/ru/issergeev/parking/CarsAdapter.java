@@ -3,28 +3,32 @@ package ru.issergeev.parking;
 import android.content.Context;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
+import br.com.sapereaude.maskedEditText.MaskedEditText;
+
 public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
-    private static final String RUS = "A 777 MP 97";
-    private static final String BEL = "1234 AA-7";
-    private static final String UKR = "AA 1234 AA";
-    private static final String KAZ = "123 ABC 01";
+    private final String RUS = "A 777 MP 97";
+    private final String BEL = "1234 AA-7";
+    private final String UKR = "AA 1234 AA";
+    private final String KAZ = "123 ABC 01";
+
+    private final String RUSmask = "# ### ## ###";
+    private final String BELmask = "#### ##-#";
+    private final String UKRmask = "## #### ##";
+    private final String KAZmask = "### ### ##";
 
     private String[] countries;
     private int[] flags;
@@ -58,7 +62,7 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
 
         holder.isHint = true;
         holder.name.setText("");
-        holder.licencePlate.setHint(RUS);
+        //holder.licencePlate.setHint(RUS);
         holder.licencePlate.setText("");
         holder.licencePlate.setTextSize(35f);
         holder.country.setSelection(0);
@@ -91,8 +95,8 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
         int position = 0;
         String hint = "";
 
-        final TextView name;
-        final TextView licencePlate;
+        final EditText name;
+        final MaskedEditText licencePlate;
         final Spinner country;
         final Button button;
 
@@ -117,21 +121,25 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     switch (i) {
                         case 0 :
-                            hint = RUS;
+                            //hint = RUS;
+                            licencePlate.setMask(RUSmask);
                             break;
                         case 1 :
-                            hint = BEL;
+                            //hint = BEL;
+                            licencePlate.setMask(BELmask);
                             break;
                         case 2 :
-                            hint = UKR;
+                            //hint = UKR;
+                            licencePlate.setMask(UKRmask);
                             break;
                         case 3 :
-                            hint = KAZ;
+                            //hint = KAZ;
+                            licencePlate.setMask(KAZmask);
                     }
 
                     cars.get(getAdapterPosition()).setCountry(view.getResources().getStringArray(R.array.countries)[country.getSelectedItemPosition()]);
 
-                    licencePlate.setHint(hint);
+                    //licencePlate.setHint(hint);
                 }
 
                 @Override
@@ -142,28 +150,33 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
                 @Override
                 public boolean onLongClick(final View view) {
                     if (isHint) {
-                        licencePlate.setHint(view.getResources().getString(R.string.licence_plate));
-                        licencePlate.setTextSize(25f);
+                        //licencePlate.setHint(view.getResources().getString(R.string.licence_plate));
+                        //licencePlate.setTextSize(25f);
+                        licencePlate.setMask("##########");
                         isHint = false;
                     } else {
                         position = country.getSelectedItemPosition();
 
                         switch (position) {
                             case 0 :
-                                hint = RUS;
+                                //hint = RUS;
+                                licencePlate.setMask(RUSmask);
                                 break;
                             case 1 :
-                                hint = BEL;
+                                //hint = BEL;
+                                licencePlate.setMask(BELmask);
                                 break;
                             case 2 :
-                                hint = UKR;
+                                //hint = UKR;
+                                licencePlate.setMask(UKRmask);
                                 break;
                             case 3 :
-                                hint = KAZ;
+                                //hint = KAZ;
+                                licencePlate.setMask(KAZmask);
                         }
 
-                        licencePlate.setHint(hint);
-                        licencePlate.setTextSize(35f);
+                        //licencePlate.setHint(hint);
+                        //licencePlate.setTextSize(35f);
                         isHint = true;
                     }
 
@@ -177,10 +190,10 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
 
                                             switch (position) {
                                                 case 0:
-                                                    hint = RUS;
+                                                    //hint = RUS;
                                                     break;
                                                 case 1:
-                                                    hint = BEL;
+                                                    //hint = BEL;
                                                     break;
                                                 case 2:
                                                     hint = UKR;
@@ -189,8 +202,8 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
                                                     hint = KAZ;
                                             }
 
-                                            licencePlate.setHint(hint);
-                                            licencePlate.setTextSize(35f);
+                                            //licencePlate.setHint(hint);
+                                            //licencePlate.setTextSize(35f);
                                             isHint = true;
                                         } catch (NullPointerException e){}
                                     }

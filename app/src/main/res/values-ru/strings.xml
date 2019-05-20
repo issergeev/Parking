@@ -17,7 +17,7 @@
     <string name="deleteCar">Удалить</string>
     <string name="age_pickness">Дата рождения</string>
     <string name="car_name">Название машины</string>
-    <string name="car_id">O 123 OO 777</string>
+    <string name="car_id">Номер</string>
     <string name="licence_plate">Номер машины</string>
     <string name="add">Добавить ТС</string>
     <string name="no_template">Отключить маску ввода</string>
@@ -28,6 +28,20 @@
         <item>Украина</item>
         <item>Казахстан</item>
     </string-array>
+    <string-array name="hours">
+        <item>1 час</item>
+        <item>2 часа</item>
+        <item>3 часа</item>
+        <item>4 часа</item>
+        <item>5 часов</item>
+        <item>6 часов</item>
+        <item>7 часов</item>
+        <item>8 часов</item>
+        <item>9 часов</item>
+        <item>10 часов</item>
+        <item>11 часов</item>
+        <item>12 часов</item>
+    </string-array>
     <string name="payment">Оплата парковки</string>
     <string name="parkingNumber">Номер парковки</string>
     <string name="pay">Оплатить</string>
@@ -36,6 +50,10 @@
     <string name="no_cars_message">Не добавлено ни одной машины. Вы хотите продолжить?</string>
     <string name="no_car_name">Одному из транспортных средств не присвоено имя</string>
     <string name="no_licence_plate">У одного из транспортных средств отсутствует номер</string>
+    <string name="no_cars_text">Ни одной машины не добавлено</string>
+    <string name="no_parking_number">Укажите номер парковки</string>
+    <string name="parking">Активная сессия</string>
+    <string name="licence_plate2">Номер машины: </string>
 
     //Navigation Drawer
     <string name="title_activity_main_page">Главная</string>
@@ -50,4 +68,8 @@
     <string name="primary">Главная</string>
     <string name="garage">Мой гараж</string>
     <string name="map">Карта</string>
+
+    <string name="delete">УДАЛИТЬ</string>
+
+    <string name="remaining">Осталось времени: </string>
 </resources>

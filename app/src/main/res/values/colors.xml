@@ -6,4 +6,8 @@
     <color name="textColor">#fcff48</color>
     <color name="inactiveTextColor">#7e7e7e</color>
     <color name="launcherTextColor">#FF6A6A</color>
+
+    <color name="bg_row_background">#fa315b</color>
+    <color name="item_name">#535353</color>
+    <color name="description">#a9a9a9</color>
 </resources>

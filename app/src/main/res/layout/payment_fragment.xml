@@ -29,13 +29,18 @@
         android:layout_centerInParent="true"
         android:orientation="vertical">
 
-        <EditText
+        <br.com.sapereaude.maskedEditText.MaskedEditText
+            android:id="@+id/parkingID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/parkingNumber"
-            android:text="_ _ _ _"
             android:textSize="30sp"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:hint="@string/parking_number"
+            app:allowed_chars="0123456789"
+            android:inputType="number"
+            android:typeface="monospace"
+            app:mask="####"
+            app:keep_hint="true"/>
 
         <!--Spinner-->
         <RelativeLayout
@@ -71,9 +76,9 @@
         <!--Spinner-->
         <RelativeLayout
             android:id="@+id/hoursSpinner"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/carSpinner"
+            android:gravity="center"
             android:paddingEnd="1dp"
             android:paddingStart="1dp"
             android:layout_marginBottom="10dp"
@@ -89,6 +94,8 @@
                 android:background="@android:color/transparent"
                 android:gravity="center"
                 android:layout_marginStart="5dp"
+                android:entries="@array/hours"
+                android:foregroundGravity="center"
                 android:spinnerMode="dropdown"/>
 
             <ImageView
@@ -102,6 +109,7 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/payButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

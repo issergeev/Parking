@@ -18,7 +18,7 @@
     <string name="deleteCar">Delete</string>
     <string name="age_pickness">Date of Birth</string>
     <string name="car_name">Car name</string>
-    <string name="car_id">O 123 OO 777</string>
+    <string name="car_id">Licence plate</string>
     <string name="licence_plate">Licence plate</string>
     <string name="add">Add One More Car</string>
     <string name="no_template">Disable templates</string>
@@ -29,12 +29,31 @@
         <item>Ukraine</item>
         <item>Kazakhstan</item>
     </string-array>
+    <string-array name="hours">
+        <item>1 hour</item>
+        <item>2 hours</item>
+        <item>3 hours</item>
+        <item>4 hours</item>
+        <item>5 hours</item>
+        <item>6 hours</item>
+        <item>7 hours</item>
+        <item>8 hours</item>
+        <item>9 hours</item>
+        <item>10 hours</item>
+        <item>11 hours</item>
+        <item>12 hours</item>
+    </string-array>
     <string name="payment">Pay for parking</string>
     <string name="parkingNumber">Parking number</string>
     <string name="pay">Pay</string>
     <string name="myGarage">My garage</string>
     <string name="no_car_name">Some car does not have a name</string>
     <string name="no_licence_plate">Some car does not have a licence plate</string>
+    <string name="parking_number">____</string>
+    <string name="no_cars_text">There are no cars added</string>
+    <string name="no_parking_number">Please, insert a parking station number</string>
+    <string name="parking">Active Parking</string>
+    <string name="licence_plate2">Licence plate: </string>
 
     //Navigation Drawer
     <string name="title_activity_main_page">MainPage</string>
@@ -49,4 +68,8 @@
     <string name="primary">Primary</string>
     <string name="garage">Garage</string>
     <string name="map">Map</string>
+
+    <string name="delete">DELETE</string>
+
+    <string name="remaining">Time remaining: </string>
 </resources>

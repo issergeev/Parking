@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/primary"
+            android:icon="@drawable/menu_main"
+            android:title="@string/primary" />
+        <item
+            android:id="@+id/garage"
+            android:icon="@drawable/menu_garage"
+            android:title="@string/garage" />
+        <item
+            android:id="@+id/map"
+            android:icon="@drawable/menu_map"
+            android:title="@string/map" />
+    </group>
+</menu>

@@ -1,6 +1,8 @@
 package ru.issergeev.parking;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class SplashScreen extends AppCompatActivity {
+    private SharedPreferences preferences;
+    private final String appData = "ParkingData";
+    private final String firstStart = "FirstStart";
+
     private Sleep sleep;
 
     private Animation translateImage, translateText;
@@ -35,6 +41,8 @@ public class SplashScreen extends AppCompatActivity {
 
         logo = findViewById(R.id.logo);
         text = findViewById(R.id.text);
+
+        preferences = getSharedPreferences(appData, Context.MODE_PRIVATE);
 
         sleep = new Sleep();
         sleep.execute();
@@ -65,7 +73,12 @@ public class SplashScreen extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                startActivity(new Intent(SplashScreen.this, MainActivity.class));
+                if (preferences.getBoolean(firstStart, true)) {
+                    startActivity(new Intent(SplashScreen.this, MainActivity.class));
+                } else {
+                    startActivity(new Intent(SplashScreen.this, MainPage.class));
+                }
+
                 finish();
             }
             return null;

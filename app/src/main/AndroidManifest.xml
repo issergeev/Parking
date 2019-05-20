@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ru.issergeev.parking">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application
         android:allowBackup="true"
@@ -11,10 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_new_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
+        <activity android:name=".ParkingActivity"></activity>
         <activity
             android:name=".MainPage"
             android:label="@string/title_activity_main_page"
-            android:theme="@style/NoActionBar.NoActionBar"></activity>
+            android:theme="@style/NoActionBar.NoActionBar" />
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

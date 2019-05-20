@@ -37,7 +37,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private SQLWorker sqlWorker;
 
-    private List<Cars> carsList;
+    private List<Cars> carsList, rawList;
     private CarsAdapter carsAdapter;
 
     private AllEventsListener allEventsListener;
@@ -60,16 +60,22 @@ public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
-    private static final String appData = "ParkingData";
-    private static final String firstStart = "FirstStart";
-    private static final String userName = " UserName";
-    private static final String userAge = " UserAge";
-    private static final String page = "Page";
+    private final String appData = "ParkingData";
+    private final String firstStart = "FirstStart";
+    private final String first = "First";
+    private final String userName = " UserName";
+    private final String userAge = " UserAge";
+    private final String page = "Page";
+
+    private boolean correct = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        preferences = getSharedPreferences(appData, MODE_PRIVATE);
+        editor = preferences.edit();
 
         sqlWorker = new SQLWorker(this);
 
@@ -87,10 +93,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         carsList = new ArrayList<>();
+        rawList = new ArrayList<>();
         carsAdapter = new CarsAdapter(this, carsList);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setAdapter(carsAdapter);
-        carsList.add(new Cars());
+        carsList.add(new Cars(null, null));
         carsAdapter.notifyItemInserted(carsList.size());
 
         button = findViewById(R.id.start);
@@ -108,13 +115,6 @@ public class MainActivity extends AppCompatActivity {
         name.addTextChangedListener(allEventsListener);
 
         spinner = findViewById(R.id.spinner);
-
-        preferences = getSharedPreferences(appData, MODE_PRIVATE);
-        editor = preferences.edit();
-
-        //DELETE after test
-        editor.putBoolean(firstStart, true);
-        editor.apply();
         //END
 
         myFlipper.setDisplayedChild(preferences.getInt(page, 0));
@@ -146,6 +146,11 @@ public class MainActivity extends AppCompatActivity {
 
         finish = findViewById(R.id.finish);
         finish.setOnClickListener(allEventsListener);
+
+        if (preferences.getBoolean(first, true) == false) {
+            startActivity(new Intent(this, MainPage.class));
+            finish();
+        }
     }
 
     private boolean dateComparator(int[] current, int[] selected) {
@@ -349,7 +354,7 @@ public class MainActivity extends AppCompatActivity {
                     showDatePickerDialog(datePicker.getText().toString());
                     break;
                 case R.id.actionButton:
-                    carsList.add(new Cars());
+                    carsList.add(new Cars(null, null));
                     carsAdapter.notifyItemInserted(carsAdapter.getItemCount());
                     break;
                 case R.id.finish:
@@ -363,8 +368,6 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             alertDialog = new AlertDialog.Builder(MainActivity.this);
                         }
-
-                        Log.d("log", "List == 0");
 
                         alertDialog.setTitle(R.string.no_cars)
                                 .setMessage(R.string.no_cars_message)
@@ -403,10 +406,10 @@ public class MainActivity extends AppCompatActivity {
                         for (Cars cars : carsList) {
                             if (cars.getName() != null && cars.getName().length() != 0) {
                                 if (cars.getLicence_plate() != null && cars.getLicence_plate().length() != 0) {
-                                    counter++;
+                                    rawList.add(new Cars(cars.getName(), cars.getLicence_plate()));
                                 } else {
                                     Toast.makeText(MainActivity.this, R.string.no_licence_plate, Toast.LENGTH_SHORT).show();
-                                    Log.d("log", cars.getName());
+                                    rawList.clear();
                                     break;
                                 }
                             } else {
@@ -415,15 +418,31 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
 
-                        if (counter == carsList.size()) {
-                            for (Cars cars : carsList) {
+                        correct = true;
+                        for (int i = 0; i < rawList.size() - 1; i++) {
+                            for (int j = i + 1; j < rawList.size(); j++) {
+                                if (rawList.get(i).getName().equals(rawList.get(j).getName())
+                                    || rawList.get(i).getLicence_plate().equals(rawList.get(j).getLicence_plate())) {
+                                    correct = false;
+                                    Toast.makeText(MainActivity.this, "Duplicate name or licence plate", Toast.LENGTH_SHORT).show();
+                                    break;
+                                }
+                            }
+                        }
+
+
+
+                        if (correct && rawList.size() == carsList.size()) {
+                            for (Cars cars : rawList) {
                                 sqlWorker.insertCar(cars.getName(), cars.getLicence_plate(), cars.getCountry());
                             }
 
+                            sqlWorker.close();
+
                             startActivity(new Intent(MainActivity.this, MainPage.class));
+                            finish();
                         }
                     }
-                    sqlWorker.close();
             }
         }
 
