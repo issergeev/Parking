@@ -13,22 +13,22 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import java.util.List;
 
 import br.com.sapereaude.maskedEditText.MaskedEditText;
 
 public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
-    private final String RUS = "A 777 MP 97";
+//    private final String RUSmask = "# ### ## ###";
+//    private final String BELmask = "#### ##-#";
+//    private final String UKRmask = "## #### ##";
+//    private final String KAZmask = "### ### ##";
+//    private final String noMask = "########";
+
+    private final String RUS = "A 777 MP 777";
     private final String BEL = "1234 AA-7";
     private final String UKR = "AA 1234 AA";
     private final String KAZ = "123 ABC 01";
-
-    private final String RUSmask = "# ### ## ###";
-    private final String BELmask = "#### ##-#";
-    private final String UKRmask = "## #### ##";
-    private final String KAZmask = "### ### ##";
 
     private String[] countries;
     private int[] flags;
@@ -62,7 +62,6 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
 
         holder.isHint = true;
         holder.name.setText("");
-        //holder.licencePlate.setHint(RUS);
         holder.licencePlate.setText("");
         holder.licencePlate.setTextSize(35f);
         holder.country.setSelection(0);
@@ -93,10 +92,10 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
     class ViewHolder extends RecyclerView.ViewHolder {
         boolean isHint = true;
         int position = 0;
-        String hint = "";
+        String hint = RUS;
 
         final EditText name;
-        final MaskedEditText licencePlate;
+        final EditText licencePlate;
         final Spinner country;
         final Button button;
 
@@ -121,25 +120,25 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     switch (i) {
                         case 0 :
-                            //hint = RUS;
-                            licencePlate.setMask(RUSmask);
+                            hint = RUS;
+                            //licencePlate.setMask(RUSmask);
                             break;
                         case 1 :
-                            //hint = BEL;
-                            licencePlate.setMask(BELmask);
+                            hint = BEL;
+                            //licencePlate.setMask(BELmask);
                             break;
                         case 2 :
-                            //hint = UKR;
-                            licencePlate.setMask(UKRmask);
+                            hint = UKR;
+                            //licencePlate.setMask(UKRmask);
                             break;
                         case 3 :
-                            //hint = KAZ;
-                            licencePlate.setMask(KAZmask);
+                            hint = KAZ;
+                            //licencePlate.setMask(KAZmask);
                     }
 
                     cars.get(getAdapterPosition()).setCountry(view.getResources().getStringArray(R.array.countries)[country.getSelectedItemPosition()]);
 
-                    //licencePlate.setHint(hint);
+                    licencePlate.setHint(hint);
                 }
 
                 @Override
@@ -150,59 +149,34 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
                 @Override
                 public boolean onLongClick(final View view) {
                     if (isHint) {
-                        //licencePlate.setHint(view.getResources().getString(R.string.licence_plate));
-                        //licencePlate.setTextSize(25f);
-                        licencePlate.setMask("##########");
-                        isHint = false;
-                    } else {
-                        position = country.getSelectedItemPosition();
-
-                        switch (position) {
-                            case 0 :
-                                //hint = RUS;
-                                licencePlate.setMask(RUSmask);
-                                break;
-                            case 1 :
-                                //hint = BEL;
-                                licencePlate.setMask(BELmask);
-                                break;
-                            case 2 :
-                                //hint = UKR;
-                                licencePlate.setMask(UKRmask);
-                                break;
-                            case 3 :
-                                //hint = KAZ;
-                                licencePlate.setMask(KAZmask);
-                        }
-
-                        //licencePlate.setHint(hint);
-                        //licencePlate.setTextSize(35f);
-                        isHint = true;
-                    }
-
-                    if (!isHint) {
                         Snackbar snackbar = Snackbar.make(view, view.getResources().getString(R.string.no_hint), BaseTransientBottomBar.LENGTH_LONG)
                                 .setAction(view.getResources().getString(R.string.undo), new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
+                                        licencePlate.setText("");
+
                                         try {
                                             position = country.getSelectedItemPosition();
 
                                             switch (position) {
-                                                case 0:
-                                                    //hint = RUS;
+                                                case 0 :
+                                                    hint = RUS;
+                                                    //licencePlate.setMask(RUSmask);
                                                     break;
-                                                case 1:
-                                                    //hint = BEL;
+                                                case 1 :
+                                                    hint = BEL;
+                                                    //licencePlate.setMask(BELmask);
                                                     break;
-                                                case 2:
+                                                case 2 :
                                                     hint = UKR;
+                                                    //licencePlate.setMask(UKRmask);
                                                     break;
-                                                case 3:
+                                                case 3 :
                                                     hint = KAZ;
+                                                    //licencePlate.setMask(KAZmask);
                                             }
 
-                                            //licencePlate.setHint(hint);
+                                            licencePlate.setHint(hint);
                                             //licencePlate.setTextSize(35f);
                                             isHint = true;
                                         } catch (NullPointerException e){}
@@ -210,6 +184,35 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
                                 });
                         snackbar.setActionTextColor(view.getResources().getColor(R.color.colorAccent));
                         snackbar.show();
+
+                        //licencePlate.setTextSize(25f);
+                        //licencePlate.setMask("############");
+                        licencePlate.setHint(view.getResources().getString(R.string.licence_plate));
+                        isHint = false;
+                    } else {
+                        position = country.getSelectedItemPosition();
+
+                        switch (position) {
+                            case 0 :
+                                hint = RUS;
+                                //licencePlate.setMask(RUSmask);
+                                break;
+                            case 1 :
+                                hint = BEL;
+                                //licencePlate.setMask(BELmask);
+                                break;
+                            case 2 :
+                                hint = UKR;
+                                //licencePlate.setMask(UKRmask);
+                                break;
+                            case 3 :
+                                hint = KAZ;
+                                //licencePlate.setMask(KAZmask);
+                        }
+
+                        licencePlate.setHint(hint);
+                        //licencePlate.setTextSize(35f);
+                        isHint = true;
                     }
 
                     return true;

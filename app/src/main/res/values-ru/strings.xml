@@ -8,6 +8,10 @@
     <string name="check">Пожалуйста, убедитесь, что поля заполены верно!</string>
     <string name="no_hint">Маска ввода отключена</string>
     <string name="undo">Отмена</string>
+    <string name="no_cars">Машины не добавлены</string>
+    <string name="no_cars_text">Ни одной машины не добавлено</string>
+    <string name="no_cars_add">Ни одной машины не найдено. Вы можете добавить их через страницу \"Мой гараж\"</string>
+    <string name="no_cars_garage">Ни одной машины не добавлено. Добавить сейчас?</string>
 
     //GUI
     <string name="name">Имя</string>
@@ -46,12 +50,12 @@
     <string name="parkingNumber">Номер парковки</string>
     <string name="pay">Оплатить</string>
     <string name="myGarage">Мой гараж</string>
-    <string name="no_cars">Машины не добавлены</string>
+
     <string name="no_cars_message">Не добавлено ни одной машины. Вы хотите продолжить?</string>
     <string name="no_car_name">Одному из транспортных средств не присвоено имя</string>
     <string name="no_licence_plate">У одного из транспортных средств отсутствует номер</string>
-    <string name="no_cars_text">Ни одной машины не добавлено</string>
-    <string name="no_parking_number">Укажите номер парковки</string>
+    <string name="parking_number">____</string>
+    <string name="no_parking_number">Укажите корректный номер парковки</string>
     <string name="parking">Активная сессия</string>
     <string name="licence_plate2">Номер машины: </string>
 
@@ -72,4 +76,8 @@
     <string name="delete">УДАЛИТЬ</string>
 
     <string name="remaining">Осталось времени: </string>
+    <string name="go_to_garage">Добавить</string>
+    <string name="cancel">Отмена</string>
+    <string name="add_button">Добавить</string>
+    <string name="duplicate_fields">Название или номер машмны неуникальны</string>
 </resources>

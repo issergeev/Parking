@@ -9,14 +9,17 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_new"
         android:label="@string/app_name"
+        android:resizeableActivity="false"
         android:roundIcon="@mipmap/ic_launcher_new_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
-        <activity android:name=".ParkingActivity"></activity>
+        <activity android:name=".AddCarsActivity"></activity>
+        <activity android:name=".ParkingActivity" />
         <activity
             android:name=".MainPage"
             android:label="@string/title_activity_main_page"
-            android:theme="@style/NoActionBar.NoActionBar" />
+            android:theme="@style/NoActionBar.NoActionBar"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:mask="http://schemas.android.com/tools"
     android:layout_marginBottom="@dimen/layoutMargin"
     android:orientation="horizontal">
 
@@ -33,15 +34,17 @@
             android:background="@drawable/buttons_shape"/>
     </LinearLayout>
 
-    <br.com.sapereaude.maskedEditText.MaskedEditText
+    <EditText
         android:id="@+id/licencePlate"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginBottom="10dp"
         android:layout_below="@id/linearLayout"
         android:inputType="textCapCharacters"
+        android:hint="А 777 МР 777"
         android:typeface="monospace"
-        app:mask="# ### ## ###"
+        android:digits="0123456789АВЕКМНОРСТУХ"
+        android:maxLength="12"
         android:gravity="center"
         android:background="@drawable/buttons_shape"/>
 

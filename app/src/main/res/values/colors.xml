@@ -2,10 +2,10 @@
 <resources>
     <color name="colorPrimary">#B7C228</color>
     <color name="colorPrimaryDark">#5a9f53</color>
-    <color name="colorAccent">#ffcf40</color>
+    <color name="colorAccent">#FFD640</color>
     <color name="textColor">#fcff48</color>
     <color name="inactiveTextColor">#7e7e7e</color>
-    <color name="launcherTextColor">#FF6A6A</color>
+    <color name="launcherTextColor">#FFC229</color>
 
     <color name="bg_row_background">#fa315b</color>
     <color name="item_name">#535353</color>

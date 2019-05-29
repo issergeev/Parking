@@ -1,5 +1,6 @@
 package ru.issergeev.parking;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -48,6 +49,7 @@ public class SplashScreen extends AppCompatActivity {
         sleep.execute();
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class Sleep extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -83,5 +85,11 @@ public class SplashScreen extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        sleep.cancel(true);
+        super.onBackPressed();
     }
 }

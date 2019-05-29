@@ -9,6 +9,8 @@
     <string name="undo">Undo</string>
     <string name="no_cars">Cars not founded</string>
     <string name="no_cars_message">There are no cars added. Would you like to continue?</string>
+    <string name="no_cars_add">There are no cars founded. You can add them from \"Garage\" menu</string>
+    <string name="no_cars_garage">There are no cars added. Would you like to add some?</string>
 
     //GUI
     <string name="name">First Name</string>
@@ -51,7 +53,7 @@
     <string name="no_licence_plate">Some car does not have a licence plate</string>
     <string name="parking_number">____</string>
     <string name="no_cars_text">There are no cars added</string>
-    <string name="no_parking_number">Please, insert a parking station number</string>
+    <string name="no_parking_number">Please, insert the correct parking station number</string>
     <string name="parking">Active Parking</string>
     <string name="licence_plate2">Licence plate: </string>
 
@@ -72,4 +74,8 @@
     <string name="delete">DELETE</string>
 
     <string name="remaining">Time remaining: </string>
+    <string name="go_to_garage">Add car</string>
+    <string name="cancel">Cancel</string>
+    <string name="add_button">Add</string>
+    <string name="duplicate_fields">Duplicate name or licence plate</string>
 </resources>

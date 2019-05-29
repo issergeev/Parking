@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/layoutMargin"
+    android:background="@color/colorPrimary">
+
+    <ImageView
+        android:id="@+id/garage"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="@dimen/layoutMargin"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/garage"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/garage"
+        android:layout_above="@+id/finish"/>
+
+    <Button
+        android:id="@id/add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="@string/add_button"
+        android:textColor="@color/textColor"
+        android:background="@drawable/buttons_shape"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/actionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/plus"
+        app:fabSize="auto"/>
+</RelativeLayout>

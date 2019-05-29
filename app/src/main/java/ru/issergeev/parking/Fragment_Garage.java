@@ -1,9 +1,14 @@
 package ru.issergeev.parking;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -11,15 +16,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Fragment_Garage extends Fragment implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
-    private SQLiteDatabase database;
-    private DB db;
-
     private RecyclerView recyclerView;
+    private Button add;
+
     private CarListAdapter adapter;
 
     private ArrayList<Cars> list;
@@ -32,10 +38,18 @@ public class Fragment_Garage extends Fragment implements RecyclerItemTouchHelper
         list = MainPage.list;
 
         recyclerView = view.findViewById(R.id.carsList);
+        add = view.findViewById(R.id.add);
 
         adapter = new CarListAdapter(view.getContext(), list);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), AddCarsActivity.class));
+            }
+        });
 
         return view;
     }

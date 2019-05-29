@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -47,10 +48,9 @@ public class MainActivity extends AppCompatActivity {
     private Button button, next, nextHidden, finish, datePicker;
     private FloatingActionButton actionButton;
     private EditText name;
-    private Spinner spinner;
     private Animation setInAnimation;
     private Animation setOutAnimation;
-    AlertDialog.Builder alertDialog;
+    private AlertDialog.Builder alertDialog;
 
     String[] rawDate;
     int[] selectedDate;
@@ -113,8 +113,6 @@ public class MainActivity extends AppCompatActivity {
 
         name = findViewById(R.id.name);
         name.addTextChangedListener(allEventsListener);
-
-        spinner = findViewById(R.id.spinner);
         //END
 
         myFlipper.setDisplayedChild(preferences.getInt(page, 0));
@@ -358,91 +356,8 @@ public class MainActivity extends AppCompatActivity {
                     carsAdapter.notifyItemInserted(carsAdapter.getItemCount());
                     break;
                 case R.id.finish:
-                    sqlWorker.open();
-
-                    int counter = 0;
-
-                    if (carsList.size() == 0) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            alertDialog = new AlertDialog.Builder(MainActivity.this, android.R.style.Theme_Material_Dialog_Alert);
-                        } else {
-                            alertDialog = new AlertDialog.Builder(MainActivity.this);
-                        }
-
-                        alertDialog.setTitle(R.string.no_cars)
-                                .setMessage(R.string.no_cars_message)
-                                .setPositiveButton(R.string.next, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        startActivity(new Intent(MainActivity.this, MainPage.class));
-                                        finish();
-                                    }
-                                })
-                                .setNegativeButton(android.R.string.cancel, null)
-                                .setCancelable(true)
-                                .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                                    @Override
-                                    public void onCancel(DialogInterface dialogInterface) {
-                                        editor.putBoolean(firstStart, true);
-                                        editor.apply();
-                                    }
-                                })
-                                .setIcon(R.drawable.conversation);
-
-                        final AlertDialog dialog = alertDialog.create();
-                        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-                            @Override
-                            public void onShow(DialogInterface dialogInterface) {
-                                Button nextButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                                Button cancelButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-
-                                nextButton.setTextColor(getResources()
-                                        .getColor(android.R.color.holo_red_light));
-                                cancelButton.setTextColor(getResources()
-                                        .getColor(android.R.color.holo_green_light));
-                            }
-                        });
-                        dialog.show();
-                    } else {
-                        for (Cars cars : carsList) {
-                            if (cars.getName() != null && cars.getName().length() != 0) {
-                                if (cars.getLicence_plate() != null && cars.getLicence_plate().length() != 0) {
-                                    rawList.add(new Cars(cars.getName(), cars.getLicence_plate()));
-                                } else {
-                                    Toast.makeText(MainActivity.this, R.string.no_licence_plate, Toast.LENGTH_SHORT).show();
-                                    rawList.clear();
-                                    break;
-                                }
-                            } else {
-                                Toast.makeText(MainActivity.this, R.string.no_car_name, Toast.LENGTH_SHORT).show();
-                                break;
-                            }
-                        }
-
-                        correct = true;
-                        for (int i = 0; i < rawList.size() - 1; i++) {
-                            for (int j = i + 1; j < rawList.size(); j++) {
-                                if (rawList.get(i).getName().equals(rawList.get(j).getName())
-                                    || rawList.get(i).getLicence_plate().equals(rawList.get(j).getLicence_plate())) {
-                                    correct = false;
-                                    Toast.makeText(MainActivity.this, "Duplicate name or licence plate", Toast.LENGTH_SHORT).show();
-                                    break;
-                                }
-                            }
-                        }
-
-
-
-                        if (correct && rawList.size() == carsList.size()) {
-                            for (Cars cars : rawList) {
-                                sqlWorker.insertCar(cars.getName(), cars.getLicence_plate(), cars.getCountry());
-                            }
-
-                            sqlWorker.close();
-
-                            startActivity(new Intent(MainActivity.this, MainPage.class));
-                            finish();
-                        }
-                    }
+                    finish.setEnabled(false);
+                    new Writer().execute();
             }
         }
 
@@ -450,5 +365,116 @@ public class MainActivity extends AppCompatActivity {
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {}
         @Override
         public void onNothingSelected(AdapterView<?> adapterView) {}
+    }
+
+    private class Writer extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            sqlWorker.open();
+
+            if (carsList.size() == 0) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    alertDialog = new AlertDialog.Builder(MainActivity.this, android.R.style.Theme_Material_Dialog_Alert);
+                } else {
+                    alertDialog = new AlertDialog.Builder(MainActivity.this);
+                }
+
+                alertDialog.setTitle(R.string.no_cars)
+                        .setMessage(R.string.no_cars_message)
+                        .setPositiveButton(R.string.next, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                startActivity(new Intent(MainActivity.this, MainPage.class));
+                                finish();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .setCancelable(true)
+                        .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                            @Override
+                            public void onCancel(DialogInterface dialogInterface) {
+                                editor.putBoolean(firstStart, true);
+                                editor.apply();
+                            }
+                        })
+                        .setIcon(R.drawable.conversation);
+
+                final AlertDialog dialog = alertDialog.create();
+                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialogInterface) {
+                        Button nextButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        Button cancelButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+
+                        nextButton.setTextColor(getResources()
+                                .getColor(android.R.color.holo_red_light));
+                        cancelButton.setTextColor(getResources()
+                                .getColor(android.R.color.holo_green_light));
+                    }
+                });
+                dialog.show();
+            } else {
+                for (Cars cars : carsList) {
+                    if (cars.getName() != null && cars.getName().length() != 0) {
+                        if (cars.getLicence_plate() != null && cars.getLicence_plate().length() != 0) {
+                            rawList.add(new Cars(cars.getName(), cars.getLicence_plate()));
+                        } else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(MainActivity.this, R.string.no_licence_plate, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            rawList.clear();
+                            break;
+                        }
+                    } else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(MainActivity.this, R.string.no_car_name, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        break;
+                    }
+                }
+
+                correct = true;
+                for (int i = 0; i < rawList.size() - 1; i++) {
+                    for (int j = i + 1; j < rawList.size(); j++) {
+                        if (rawList.get(i).getName().equals(rawList.get(j).getName())
+                                || rawList.get(i).getLicence_plate().equals(rawList.get(j).getLicence_plate())) {
+                            correct = false;
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(MainActivity.this, "Duplicate name or licence plate", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            break;
+                        }
+                    }
+                }
+
+                if (correct && rawList.size() == carsList.size()) {
+                    for (Cars cars : rawList) {
+                        sqlWorker.insertCar(cars.getName(), cars.getLicence_plate(), cars.getCountry());
+                    }
+
+                    sqlWorker.close();
+
+                    startActivity(new Intent(MainActivity.this, MainPage.class));
+                    finish();
+                }
+            }
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    finish.setEnabled(true);
+                }
+            });
+            return null;
+        }
     }
 }
