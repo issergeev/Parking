@@ -7,9 +7,10 @@ public class Cars {
 
     private String thumbnail;
 
-    Cars (String name, String licencePlate) {
+    Cars (String name, String licencePlate, String country) {
         this.name = name;
         this.licence_plate = licencePlate;
+        this.country = country;
     }
 
     public String getName() {

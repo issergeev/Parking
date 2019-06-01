@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 public class SQLWorker {
 
     //Where clause constants
-    private final String WHERE_CLAUSE = DB.getKeyId() + " = ?";
+    private final String WHERE_CLAUSE = DB.getKeyLicencePlate() + " = ?";
 
     //Classes to work with Database
     private DB db;
@@ -33,31 +33,31 @@ public class SQLWorker {
     }
 
     //Function to INSERT new car into Database
-    public long insertCar(String car_name, String licence_plate, String country) {
+    public long insertCar(String licence_plate, String car_name, String country) {
         ContentValues values = new ContentValues();
 
-        values.put(DB.getKeyName(), car_name);
         values.put(DB.getKeyLicencePlate(), licence_plate);
+        values.put(DB.getKeyName(), car_name);
         values.put(DB.getKeyCountry(), country);
 
         return database.insert(DB.getTableCars(), null, values);
     }
 
     //Function to UPDATE a car in Database
-    public void updateCar(String car_id, String new_car_name, String new_licence_plate, String new_country) {
+    public void updateCar(String licence_plate, String new_car_name, String new_licence_plate, String new_country) {
         ContentValues values = new ContentValues();
 
-        values.put(DB.getKeyName(), new_car_name);
         values.put(DB.getKeyLicencePlate(), new_licence_plate);
+        values.put(DB.getKeyName(), new_car_name);
         values.put(DB.getKeyCountry(), new_country);
 
-        database.update(DB.getTableCars(), values, WHERE_CLAUSE, new String[]{car_id});
+        database.update(DB.getTableCars(), values, WHERE_CLAUSE, new String[]{licence_plate});
     }
 
     //Function to DELETE a car in Database
-    public void deleteCar(String car_id) {
+    public void deleteCar(String licencePlate) {
         database.delete(DB.getTableCars(), WHERE_CLAUSE,
-                new String[]{car_id});
+                new String[]{licencePlate});
     }
 
     //Reading rows in a Table in Database

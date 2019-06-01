@@ -43,9 +43,8 @@ class DB extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + TABLE_CARS +
-                    "(" + KEY_ID + " integer primary key autoincrement,"
+                    "(" + KEY_LICENCE_PLATE + " text(15) primary key,"
                     + KEY_NAME + " text(20),"
-                    + KEY_LICENCE_PLATE + " text(15),"
                     + KEY_COUNTRY + " text(19)"+ ")");
 
     }

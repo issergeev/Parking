@@ -39,6 +39,8 @@ public class Fragment_Payment extends Fragment {
     private Button pay;
     private MaskedEditText parkingID;
 
+    private CarRowAdapter adapter;
+
     private AlertDialog.Builder alertDialog;
 
     private boolean isEmpty = false;
@@ -52,7 +54,7 @@ public class Fragment_Payment extends Fragment {
         editor = sharedPreferences.edit();
 
         list = MainPage.list;
-        final CarRowAdapter adapter = new CarRowAdapter(view.getContext(), list);
+        adapter = new CarRowAdapter(view.getContext(), list);
         if (adapter.isEmpty())
             isEmpty = true;
 
@@ -126,6 +128,12 @@ public class Fragment_Payment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        adapter.notifyDataSetChanged();
+        super.onResume();
     }
 
     @Override

@@ -62,7 +62,8 @@
                 android:background="@android:color/transparent"
                 android:gravity="center"
                 android:layout_marginStart="5dp"
-                android:spinnerMode="dropdown"/>
+                android:spinnerMode="dropdown"
+                android:popupBackground="@color/popupBackground"/>
 
             <ImageView
                 android:layout_width="60dp"
@@ -96,7 +97,8 @@
                 android:layout_marginStart="5dp"
                 android:entries="@array/hours"
                 android:foregroundGravity="center"
-                android:spinnerMode="dropdown"/>
+                android:spinnerMode="dropdown"
+                android:popupBackground="@color/popupBackground"/>
 
             <ImageView
                 android:layout_width="60dp"

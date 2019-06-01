@@ -14,12 +14,14 @@ public class CountriesAdapter extends ArrayAdapter<String> {
     String[] spinnerNames;
     int[] spinnerFlags;
     Context mContext;
+    int colorId;
 
-    public CountriesAdapter(@NonNull Context context, String[] names, int[] flags) {
+    public CountriesAdapter(@NonNull Context context, String[] names, int[] flags, int colorId) {
         super(context, R.layout.countries_spinner_row);
         this.spinnerNames = names;
         this.spinnerFlags = flags;
         this.mContext = context;
+        this.colorId = colorId;
     }
 
     @Override
@@ -48,6 +50,7 @@ public class CountriesAdapter extends ArrayAdapter<String> {
         }
         mViewHolder.flag.setImageResource(spinnerFlags[position]);
         mViewHolder.name.setText(spinnerNames[position]);
+        convertView.setBackgroundColor(convertView.getResources().getColor(colorId));
 
         return convertView;
     }

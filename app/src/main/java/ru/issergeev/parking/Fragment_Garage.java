@@ -1,14 +1,8 @@
 package ru.issergeev.parking;
 
-import android.app.AlertDialog;
 import android.app.Fragment;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -16,14 +10,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class Fragment_Garage extends Fragment implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
-    private RecyclerView recyclerView;
+public class Fragment_Garage extends Fragment implements AdapterView.OnItemClickListener {
+    private static RecyclerView recyclerView;
     private Button add;
 
     private CarListAdapter adapter;
@@ -40,7 +33,7 @@ public class Fragment_Garage extends Fragment implements RecyclerItemTouchHelper
         recyclerView = view.findViewById(R.id.carsList);
         add = view.findViewById(R.id.add);
 
-        adapter = new CarListAdapter(view.getContext(), list);
+        adapter = new CarListAdapter(view.getContext(), list, this);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -55,6 +48,11 @@ public class Fragment_Garage extends Fragment implements RecyclerItemTouchHelper
     }
 
     @Override
+    public void onResume() {
+        adapter.notifyDataSetChanged();
+        super.onResume();
+    }
+
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
         if (viewHolder instanceof CarListAdapter.ViewHolder) {
             // get the removed item name to display it in snack bar
@@ -81,5 +79,14 @@ public class Fragment_Garage extends Fragment implements RecyclerItemTouchHelper
             snackbar.setActionTextColor(Color.YELLOW);
             snackbar.show();
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Cars car = list.get(i);
+        startActivity(new Intent(getActivity(), CarEditActivity.class)
+                .putExtra("Name", car.getName())
+                .putExtra("LicencePlate", car.getLicence_plate())
+                .putExtra("Country", car.getCountry()));
     }
 }

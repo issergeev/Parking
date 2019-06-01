@@ -42,12 +42,14 @@ public class CarRowAdapter extends ArrayAdapter<String> {
             convertView = mInflater.inflate(R.layout.car_row, parent, false);
             mViewHolder.name = convertView.findViewById(R.id.carName);
             mViewHolder.licencePlate = convertView.findViewById(R.id.licencePlate);
+            mViewHolder.country = convertView.findViewById(R.id.carCountry);
             convertView.setTag(mViewHolder);
         } else {
             mViewHolder = (ViewHolder) convertView.getTag();
         }
         mViewHolder.name.setText(cars.get(position).getName());
         mViewHolder.licencePlate.setText(cars.get(position).getLicence_plate());
+        mViewHolder.country.setText(cars.get(position).getCountry());
 
         return convertView;
     }
@@ -55,6 +57,7 @@ public class CarRowAdapter extends ArrayAdapter<String> {
     private static class ViewHolder {
         TextView name;
         TextView licencePlate;
+        TextView country;
     }
 
     public String getLicencePlate(int position) {

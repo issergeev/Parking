@@ -1,5 +1,6 @@
 package ru.issergeev.parking;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -93,11 +94,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         carsList = new ArrayList<>();
-        rawList = new ArrayList<>();
         carsAdapter = new CarsAdapter(this, carsList);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setAdapter(carsAdapter);
-        carsList.add(new Cars(null, null));
+        carsList.add(new Cars(null, null, getResources().getStringArray(R.array.countries)[0]));
         carsAdapter.notifyItemInserted(carsList.size());
 
         button = findViewById(R.id.start);
@@ -145,10 +145,10 @@ public class MainActivity extends AppCompatActivity {
         finish = findViewById(R.id.finish);
         finish.setOnClickListener(allEventsListener);
 
-        if (preferences.getBoolean(first, true) == false) {
-            startActivity(new Intent(this, MainPage.class));
-            finish();
-        }
+//        if (!preferences.getBoolean(first, true)) {
+//            startActivity(new Intent(this, MainPage.class));
+//            finish();
+//        }
     }
 
     private boolean dateComparator(int[] current, int[] selected) {
@@ -307,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
                         myFlipper.setInAnimation(setInAnimation);
                         myFlipper.showNext();
 
-                        if (preferences.getBoolean(firstStart, true)) {
+                        if (preferences.getBoolean(first, true)) {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                 alertDialog = new AlertDialog.Builder(MainActivity.this,
                                         android.R.style.Theme_Material_Dialog_Alert);
@@ -318,7 +318,7 @@ public class MainActivity extends AppCompatActivity {
                                     .setMessage(R.string.no_template_message)
                                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
-                                            editor.putBoolean(firstStart, false);
+                                            editor.putBoolean(first, false);
                                             editor.apply();
                                         }
                                     })
@@ -326,7 +326,7 @@ public class MainActivity extends AppCompatActivity {
                                     .setOnCancelListener(new DialogInterface.OnCancelListener() {
                                         @Override
                                         public void onCancel(DialogInterface dialogInterface) {
-                                            editor.putBoolean(firstStart, true);
+                                            editor.putBoolean(first, true);
                                             editor.apply();
                                         }
                                     })
@@ -352,7 +352,7 @@ public class MainActivity extends AppCompatActivity {
                     showDatePickerDialog(datePicker.getText().toString());
                     break;
                 case R.id.actionButton:
-                    carsList.add(new Cars(null, null));
+                    carsList.add(new Cars(null, null, getResources().getStringArray(R.array.countries)[0]));
                     carsAdapter.notifyItemInserted(carsAdapter.getItemCount());
                     break;
                 case R.id.finish:
@@ -367,9 +367,12 @@ public class MainActivity extends AppCompatActivity {
         public void onNothingSelected(AdapterView<?> adapterView) {}
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class Writer extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... voids) {
+            rawList = new ArrayList<>();
+
             sqlWorker.open();
 
             if (carsList.size() == 0) {
@@ -389,34 +392,40 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .setNegativeButton(android.R.string.cancel, null)
                         .setCancelable(true)
-                        .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                            @Override
-                            public void onCancel(DialogInterface dialogInterface) {
-                                editor.putBoolean(firstStart, true);
-                                editor.apply();
-                            }
-                        })
+//                        .setOnCancelListener(new DialogInterface.OnCancelListener() {
+//                            @Override
+//                            public void onCancel(DialogInterface dialogInterface) {
+//                                editor.putBoolean(firstStart, true);
+//                                editor.apply();
+//                            }
+//                        })
                         .setIcon(R.drawable.conversation);
 
-                final AlertDialog dialog = alertDialog.create();
-                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                runOnUiThread(new Runnable() {
                     @Override
-                    public void onShow(DialogInterface dialogInterface) {
-                        Button nextButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                        Button cancelButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+                    public void run() {
+                        final AlertDialog dialog = alertDialog.create();
+                        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                            @Override
+                            public void onShow(DialogInterface dialogInterface) {
+                                Button nextButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                                Button cancelButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
 
-                        nextButton.setTextColor(getResources()
-                                .getColor(android.R.color.holo_red_light));
-                        cancelButton.setTextColor(getResources()
-                                .getColor(android.R.color.holo_green_light));
+                                nextButton.setTextColor(getResources()
+                                        .getColor(android.R.color.holo_red_light));
+                                cancelButton.setTextColor(getResources()
+                                        .getColor(android.R.color.holo_green_light));
+                            }
+                        });
+                        dialog.show();
                     }
                 });
-                dialog.show();
+
             } else {
                 for (Cars cars : carsList) {
                     if (cars.getName() != null && cars.getName().length() != 0) {
                         if (cars.getLicence_plate() != null && cars.getLicence_plate().length() != 0) {
-                            rawList.add(new Cars(cars.getName(), cars.getLicence_plate()));
+                            rawList.add(new Cars(cars.getName(), cars.getLicence_plate(), cars.getCountry()));
                         } else {
                             runOnUiThread(new Runnable() {
                                 @Override
@@ -458,7 +467,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (correct && rawList.size() == carsList.size()) {
                     for (Cars cars : rawList) {
-                        sqlWorker.insertCar(cars.getName(), cars.getLicence_plate(), cars.getCountry());
+                        sqlWorker.insertCar(cars.getLicence_plate(), cars.getName(), cars.getCountry());
                     }
 
                     sqlWorker.close();

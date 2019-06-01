@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,15 +17,8 @@ import android.widget.Spinner;
 
 import java.util.List;
 
-import br.com.sapereaude.maskedEditText.MaskedEditText;
 
 public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
-//    private final String RUSmask = "# ### ## ###";
-//    private final String BELmask = "#### ##-#";
-//    private final String UKRmask = "## #### ##";
-//    private final String KAZmask = "### ### ##";
-//    private final String noMask = "########";
-
     private final String RUS = "A 777 MP 777";
     private final String BEL = "1234 AA-7";
     private final String UKR = "AA 1234 AA";
@@ -113,7 +107,7 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
                     R.drawable.ua,
                     R.drawable.kz
             };
-            CountriesAdapter countriesAdapter = new CountriesAdapter(view.getContext(), countries, flags);
+            CountriesAdapter countriesAdapter = new CountriesAdapter(view.getContext(), countries, flags, android.R.color.transparent);
             country.setAdapter(countriesAdapter);
             country.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -137,6 +131,8 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
                     }
 
                     cars.get(getAdapterPosition()).setCountry(view.getResources().getStringArray(R.array.countries)[country.getSelectedItemPosition()]);
+
+                    Log.d("select", "Car with number - " + getAdapterPosition() + " set country - " + view.getResources().getStringArray(R.array.countries)[country.getSelectedItemPosition()]);
 
                     licencePlate.setHint(hint);
                 }

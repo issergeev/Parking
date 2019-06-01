@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -23,8 +24,11 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
     private LayoutInflater inflater;
     private List<Cars> cars;
 
-    CarListAdapter(Context context, List<Cars> cars) {
+    private AdapterView.OnItemClickListener onItemClickListener;
+
+    CarListAdapter(Context context, List<Cars> cars, AdapterView.OnItemClickListener onItemClickListener) {
         this.cars = cars;
+        this.onItemClickListener = onItemClickListener;
         this.inflater = LayoutInflater.from(context);
     }
 
@@ -40,6 +44,7 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
 
         holder.name.setText(car.getName());
         holder.licencePlate.setText(car.getLicence_plate());
+        holder.country.setText(car.getCountry());
     }
 
     @Override
@@ -57,20 +62,33 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
         notifyItemInserted(position);
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         RelativeLayout background, foreground;
+        FrameLayout main;
         TextView name;
         TextView licencePlate;
+        TextView country;
         ImageView thumbnail;
 
-        ViewHolder(View view){
+        ViewHolder(View view) {
             super(view);
+            main = view.findViewById(R.id.main);
             name = view.findViewById(R.id.carName);
             licencePlate = view.findViewById(R.id.licencePlate);
+            country = view.findViewById(R.id.carCountry);
 
             background = view.findViewById(R.id.view_background);
             foreground = view.findViewById(R.id.foreground);
             thumbnail = view.findViewById(R.id.thumbnail);
+
+            main.setOnClickListener(this);
+            name.setOnClickListener(this);
+            licencePlate.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            onItemClickListener.onItemClick(null, view, getAdapterPosition(), view.getId());
         }
     }
 }

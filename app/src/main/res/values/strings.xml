@@ -78,4 +78,8 @@
     <string name="cancel">Cancel</string>
     <string name="add_button">Add</string>
     <string name="duplicate_fields">Duplicate name or licence plate</string>
+    <string name="updateCar">Save</string>
+    <string name="updated">Data updated!</string>
+    <string name="existed">Car with input licence plate is already created!</string>
+    <string name="deleted">Car has been deleted!</string>
 </resources>
