@@ -80,4 +80,8 @@
     <string name="cancel">Отмена</string>
     <string name="add_button">Добавить</string>
     <string name="duplicate_fields">Название или номер машмны неуникальны</string>
+    <string name="updateCar">Сохранить</string>
+    <string name="updated">Данные обновлены!</string>
+    <string name="existed">Машина с указанным номером уже существует!</string>
+    <string name="deleted">Машина удалена!</string>
 </resources>

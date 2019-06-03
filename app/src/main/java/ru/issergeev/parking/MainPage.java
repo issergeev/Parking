@@ -3,6 +3,7 @@ package ru.issergeev.parking;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -18,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yandex.mapkit.MapKitFactory;
@@ -29,6 +31,8 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     private final String firstStart = "FirstStart";
     private final String first = "First";
     private final String displayedView = "ViewID";
+    private final String userNamePrefs = " UserName";
+    private final String userLastNamePrefs = " UserLastName";
 
     private int fragment = 0;
 
@@ -38,6 +42,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     private static NavigationView navigationView;
 
     private ImageView profile;
+    private TextView userName, lastName;
 
     private DB db;
     private static SQLiteDatabase database;
@@ -45,6 +50,13 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
 
     private FragmentManager fragmentManager;
     private Fragment paymentFragment;
+
+    @Override
+    protected void onResume() {
+        userName.setText(preferences.getString(userNamePrefs, ""));
+        lastName.setText(preferences.getString("UserLastName", ""));
+        super.onResume();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,15 +80,17 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        navigationView.getMenu().getItem(0).setChecked(true);
+
         profile = navigationView.getHeaderView(0).findViewById(R.id.profilePhoto);
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Image Pressed!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainPage.this, ProfileActivity.class));
             }
         });
-
-        navigationView.getMenu().getItem(0).setChecked(true);
+        userName = navigationView.getHeaderView(0).findViewById(R.id.userName);
+        lastName = navigationView.getHeaderView(0).findViewById(R.id.userLastName);
 
         fragmentManager = getFragmentManager();
         paymentFragment = new Fragment_Payment();

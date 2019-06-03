@@ -7,17 +7,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 
 import android.view.View;
@@ -28,7 +25,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
@@ -53,16 +49,15 @@ public class MainActivity extends AppCompatActivity {
     private Animation setOutAnimation;
     private AlertDialog.Builder alertDialog;
 
-    String[] rawDate;
-    int[] selectedDate;
-    int[] currentDate;
+    private String[] rawDate;
+    private int[] selectedDate;
+    private int[] currentDate;
 
     private boolean correctDate;
 
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     private final String appData = "ParkingData";
-    private final String firstStart = "FirstStart";
     private final String first = "First";
     private final String userName = " UserName";
     private final String userAge = " UserAge";
@@ -144,11 +139,6 @@ public class MainActivity extends AppCompatActivity {
 
         finish = findViewById(R.id.finish);
         finish.setOnClickListener(allEventsListener);
-
-//        if (!preferences.getBoolean(first, true)) {
-//            startActivity(new Intent(this, MainPage.class));
-//            finish();
-//        }
     }
 
     private boolean dateComparator(int[] current, int[] selected) {
@@ -307,6 +297,10 @@ public class MainActivity extends AppCompatActivity {
                         myFlipper.setInAnimation(setInAnimation);
                         myFlipper.showNext();
 
+                        editor.putString(userName, name.getText().toString());
+                        editor.putString(userAge, datePicker.getText().toString());
+                        editor.apply();
+
                         if (preferences.getBoolean(first, true)) {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                 alertDialog = new AlertDialog.Builder(MainActivity.this,
@@ -392,13 +386,6 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .setNegativeButton(android.R.string.cancel, null)
                         .setCancelable(true)
-//                        .setOnCancelListener(new DialogInterface.OnCancelListener() {
-//                            @Override
-//                            public void onCancel(DialogInterface dialogInterface) {
-//                                editor.putBoolean(firstStart, true);
-//                                editor.apply();
-//                            }
-//                        })
                         .setIcon(R.drawable.conversation);
 
                 runOnUiThread(new Runnable() {
@@ -457,7 +444,7 @@ public class MainActivity extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(MainActivity.this, "Duplicate name or licence plate", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MainActivity.this, R.string.duplicate_fields, Toast.LENGTH_SHORT).show();
                                 }
                             });
                             break;

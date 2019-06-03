@@ -147,6 +147,12 @@ public class AddCarsActivity extends AppCompatActivity {
                 }
             }
 
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    add.setEnabled(true);
+                }
+            });
             return null;
         }
     }

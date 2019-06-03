@@ -82,4 +82,6 @@
     <string name="updated">Data updated!</string>
     <string name="existed">Car with input licence plate is already created!</string>
     <string name="deleted">Car has been deleted!</string>
+    <string name="save">Save</string>
+    <string name="lastName">Last Name</string>
 </resources>

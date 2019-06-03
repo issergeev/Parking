@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +24,8 @@ import java.util.ArrayList;
 import br.com.sapereaude.maskedEditText.MaskedEditText;
 
 public class Fragment_Payment extends Fragment {
-//    private final String number = "7757";
+    private final String number = "7757";
+
     private final String appData = "ParkingData";
     private final String parkingStation = "ParkingStation";
     private final String carSelected = "SelectedCar";
@@ -115,10 +117,11 @@ public class Fragment_Payment extends Fragment {
             public void onClick(View view) {
                 if (Character.isDigit(parkingID.getText().charAt(3))) {
                     if (!isEmpty) {
-                        String payString = adapter.getLicencePlate(licencePlateSpinner.getSelectedItemPosition()) + "-" + hoursSpinner.getSelectedItem().toString().charAt(0);
-                        //Log.d("string", payString);
-                        //SmsManager.getDefault().sendTextMessage(number, null,payString, null, null);
-                        startActivity(new Intent(view.getContext(), ParkingActivity.class).putExtra("Data", payString));
+                        String payString = parkingID.getRawText()+ "*" + adapter.getLicencePlate(licencePlateSpinner.getSelectedItemPosition()) + "*" + hoursSpinner.getSelectedItem().toString().charAt(0);
+                        Log.d("log", payString);
+                        String data = adapter.getLicencePlate(licencePlateSpinner.getSelectedItemPosition()) + "-" + hoursSpinner.getSelectedItem().toString().charAt(0);
+                        SmsManager.getDefault().sendTextMessage(number, null, payString, null, null);
+                        startActivity(new Intent(view.getContext(), ParkingActivity.class).putExtra("Data", data));
                     } else {
                         Toast.makeText(view.getContext(), getResources().getString(R.string.no_cars_add), Toast.LENGTH_LONG).show();
                     }

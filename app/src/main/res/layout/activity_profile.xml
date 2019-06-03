@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/second"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:padding="@dimen/layoutMargin">
+
+    <ImageView
+        android:id="@+id/profilePhoto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/name"
+        android:layout_margin="@dimen/imageMargin"
+        android:src="@drawable/user"/>
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:hint="@string/name"
+        android:inputType="textPersonName"
+        android:textColorHint="@android:color/white"
+        android:textColor="@color/textColor"
+        android:gravity="center"/>
+
+    <EditText
+        android:id="@+id/lastName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/name"
+        android:hint="@string/lastName"
+        android:inputType="textPersonName"
+        android:textColorHint="@android:color/white"
+        android:textColor="@color/textColor"
+        android:gravity="center"/>
+
+    <Button
+        android:id="@+id/datePicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/lastName"
+        android:background="@drawable/no_background_buttons_shape"
+        android:text="@string/date"
+        android:textColor="@android:color/white"/>
+
+    <Button
+        android:id="@+id/save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/layoutMargin"
+        android:layout_marginEnd="@dimen/layoutMargin"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/buttons_shape"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:text="@string/save"
+        android:textColor="@color/colorAccent"/>
+</RelativeLayout>
