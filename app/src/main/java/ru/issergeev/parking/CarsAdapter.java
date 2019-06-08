@@ -45,20 +45,20 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
     public void onBindViewHolder(final CarsAdapter.ViewHolder holder, final int position) {
         final Cars car = cars.get(position);
 
-        holder.button.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 cars.remove(holder.getAdapterPosition());
-                 notifyItemRemoved(holder.getAdapterPosition());
-                 notifyItemRangeChanged(holder.getAdapterPosition(), getItemCount());
-            }
-        });
+//        holder.button.setOnClickListener(new View.OnClickListener() {
+//             @Override
+//             public void onClick(View view) {
+//                 cars.remove(holder.getAdapterPosition());
+//                 notifyItemRemoved(holder.getAdapterPosition());
+//                 notifyItemRangeChanged(holder.getAdapterPosition(), getItemCount());
+//            }
+//        });
 
-        holder.isHint = true;
-        holder.name.setText("");
-        holder.licencePlate.setText("");
-        holder.licencePlate.setTextSize(35f);
-        holder.country.setSelection(0);
+//        holder.isHint = true;
+//        holder.name.setText("");
+//        holder.licencePlate.setText("");
+//        holder.licencePlate.setTextSize(35f);
+//        holder.country.setSelection(0);
 
         TextWatcher textWatcher = new TextWatcher() {
             @Override
@@ -212,6 +212,20 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
                     }
 
                     return true;
+                }
+            });
+
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    cars.remove(getAdapterPosition());
+                    notifyItemRemoved(getAdapterPosition());
+                    notifyItemRangeChanged(getAdapterPosition(), getItemCount());
+
+                    name.setText("");
+                    licencePlate.setText("");
+                    licencePlate.setTextSize(35f);
+                    country.setSelection(0);
                 }
             });
         }
