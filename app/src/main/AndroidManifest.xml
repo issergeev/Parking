@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ru.issergeev.parking">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -15,34 +14,47 @@
         android:roundIcon="@mipmap/ic_launcher_new_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
-        <activity android:name=".ProfileActivity"></activity>
-        <activity android:name=".CarEditActivity" />
+        <activity
+            android:name=".ProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CarEditActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".AddCarsActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".ParkingActivity" />
+        <activity
+            android:name=".ParkingActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainPage"
             android:label="@string/title_activity_main_page"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionBar.NoActionBar"
-
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".SplashScreen">
+        <activity
+            android:name=".SplashScreen"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
+                <action android:name="android.intent.action.VIEW"/>
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionBar"
             android:windowSoftInputMode="adjustPan" />
 
-        <receiver android:name="SMSMonitor">
-            <intent-filter android:priority="2">
-                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+        <receiver android:name=".SMSMonitor">
+            <intent-filter android:priority="100">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
+        <service android:name=".SMSService" />
     </application>
+
 </manifest>

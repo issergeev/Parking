@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/ico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/stopwatch"/>
+
+    <TextView
+        android:id="@+id/hour"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Hour"
+        android:textSize="30sp"
+        android:layout_marginStart="10dp"
+        android:gravity="start|center_vertical"
+        android:textColor="@color/colorPrimary"
+        android:padding="5dip"/>
+</LinearLayout>

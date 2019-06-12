@@ -10,7 +10,7 @@
     tools:showIn="@layout/app_bar_main_page"
     android:padding="@dimen/layoutMargin"
     android:orientation="vertical"
-    android:background="#F3DA37">
+    android:background="@color/colorAccent">
 
     <TextView
         android:id="@+id/text"
@@ -20,6 +20,7 @@
         android:layout_marginBottom="10dp"
         android:text="@string/payment"
         android:textSize="30sp"
+        android:textColor="@android:color/holo_green_light"
         android:gravity="center"/>
 
     <LinearLayout
@@ -39,6 +40,7 @@
             app:allowed_chars="0123456789"
             android:inputType="number"
             android:typeface="monospace"
+            android:textColor="@android:color/holo_green_light"
             app:mask="####"
             app:keep_hint="true"/>
 
@@ -114,10 +116,26 @@
         android:id="@+id/payButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/avgMargin"
-        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/avgMargin"
+        android:layout_marginEnd="@dimen/avgMargin"
+        android:layout_marginTop="@dimen/avgMargin"
+        android:layout_marginBottom="15dp"
+        android:layout_above="@id/stopButton"
         android:text="@string/pay"
         android:textSize="20sp"
         android:textColor="@android:color/holo_green_light"
         android:background="@drawable/green_buttons_shape"/>
+
+    <Button
+        android:id="@+id/stopButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/avgMargin"
+        android:layout_marginEnd="@dimen/avgMargin"
+        android:layout_marginBottom="5dp"
+        android:layout_alignParentBottom="true"
+        android:text="@string/stop_parking"
+        android:textSize="20sp"
+        android:textColor="@android:color/holo_red_light"
+        android:background="@drawable/delete_buttons_shape"/>
 </RelativeLayout>

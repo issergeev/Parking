@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorAccent"
     android:padding="@dimen/layoutMargin">
 
     <ImageView
@@ -23,7 +23,7 @@
         android:layout_centerInParent="true"
         android:hint="@string/name"
         android:inputType="textPersonName"
-        android:textColorHint="@android:color/white"
+        android:textColorHint="@color/textColor"
         android:textColor="@android:color/holo_red_light"
         android:gravity="center"/>
 
@@ -35,7 +35,7 @@
         android:layout_below="@id/name"
         android:background="@drawable/no_background_buttons_shape"
         android:text="@string/date"
-        android:textColor="@android:color/white"/>
+        android:textColor="@color/textColor"/>
 
     <Button
         android:enabled="false"

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#B7C228</color>
-    <color name="colorPrimaryDark">#5a9f53</color>
-    <color name="colorAccent">#FFEC40</color>
-    <color name="textColor">#fcff48</color>
+    <color name="colorPrimaryDark">#9FAA18</color>
+    <color name="colorAccent">#FFEC72</color>
+    <color name="textColor">#AFAC2F</color>
     <color name="inactiveTextColor">#7e7e7e</color>
     <color name="launcherTextColor">#FFC229</color>
 
     <color name="bg_row_background">#fa315b</color>
     <color name="item_name">#535353</color>
     <color name="description">#a9a9a9</color>
-    <color name="popupBackground">#FFC95D</color>
+    <color name="popupBackground">#F1D163</color>
     <color name="background">#A6DFC72B</color>
+    <color name="transparent">#D0FFEC72</color>
 </resources>
-

@@ -11,14 +11,16 @@
         android:layout_height="wrap_content"
         android:textSize="30sp"
         android:text="Name"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:textColor="@android:color/holo_green_light"/>
 
     <TextView
         android:id="@+id/licencePlate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:text="Licence Plate"/>
+        android:text="Licence Plate"
+        android:textColor="#8EB90C"/>
 
     <TextView
         android:id="@+id/carCountry"
@@ -26,5 +28,3 @@
         android:layout_height="wrap_content"
         android:visibility="gone"/>
 </LinearLayout>
-
-

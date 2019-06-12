@@ -46,7 +46,6 @@
             android:id="@+id/timer"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
             android:textSize="30sp"/>
     </LinearLayout>
 
@@ -57,6 +56,6 @@
         android:layout_margin="30dp"
         android:layout_alignParentBottom="true"
         android:textColor="#FF5050"
-        android:text="Stop"
+        android:text="@string/stop"
         android:background="@drawable/delete_buttons_shape"/>
 </RelativeLayout>

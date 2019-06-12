@@ -31,6 +31,8 @@
             android:maxLength="20"
             android:gravity="center"
             android:textSize="20sp"
+            android:textColorHint="@color/textColor"
+            android:textColor="@color/textColor"
             android:background="@drawable/buttons_shape"/>
     </LinearLayout>
 
@@ -42,6 +44,8 @@
         android:layout_below="@id/linearLayout"
         android:inputType="textCapCharacters"
         android:hint="А 777 МР 777"
+        android:textColorHint="@color/textColor"
+        android:textColor="@color/textColor"
         android:typeface="monospace"
         android:digits="0123456789АВЕКМНОРСТУХ"
         android:maxLength="12"
@@ -57,7 +61,7 @@
         android:paddingEnd="1dp"
         android:paddingStart="1dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/spinner_background"
+        android:background="@drawable/spinner_background_dark"
         android:orientation="horizontal">
 
         <Spinner
@@ -69,7 +73,8 @@
             android:background="@android:color/transparent"
             android:gravity="center"
             android:layout_marginStart="5dp"
-            android:spinnerMode="dropdown"/>
+            android:spinnerMode="dropdown"
+            android:popupBackground="@color/popupBackground"/>
 
         <ImageView
             android:layout_width="60dp"

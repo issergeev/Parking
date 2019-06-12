@@ -17,11 +17,11 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/garage"
-        android:layout_above="@+id/add"/>
+        android:layout_above="@+id/add"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
 
     <Button
         android:id="@id/add"

@@ -48,6 +48,7 @@ public class CountriesAdapter extends ArrayAdapter<String> {
         } else {
             mViewHolder = (ViewHolder) convertView.getTag();
         }
+
         mViewHolder.flag.setImageResource(spinnerFlags[position]);
         mViewHolder.name.setText(spinnerNames[position]);
         convertView.setBackgroundColor(convertView.getResources().getColor(colorId));

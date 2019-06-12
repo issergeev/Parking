@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -43,22 +44,7 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(final CarsAdapter.ViewHolder holder, final int position) {
-        final Cars car = cars.get(position);
-
-//        holder.button.setOnClickListener(new View.OnClickListener() {
-//             @Override
-//             public void onClick(View view) {
-//                 cars.remove(holder.getAdapterPosition());
-//                 notifyItemRemoved(holder.getAdapterPosition());
-//                 notifyItemRangeChanged(holder.getAdapterPosition(), getItemCount());
-//            }
-//        });
-
-//        holder.isHint = true;
-//        holder.name.setText("");
-//        holder.licencePlate.setText("");
-//        holder.licencePlate.setTextSize(35f);
-//        holder.country.setSelection(0);
+        final Cars car = cars.get(holder.getAdapterPosition());
 
         TextWatcher textWatcher = new TextWatcher() {
             @Override
@@ -69,13 +55,17 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                cars.get(holder.getAdapterPosition()).setName(holder.name.getText().toString().trim());
-                cars.get(holder.getAdapterPosition()).setLicence_plate(holder.licencePlate.getText().toString().trim());
+                car.setName(holder.name.getText().toString().trim());
+                car.setLicence_plate(holder.licencePlate.getText().toString().trim());
             }
         };
 
         holder.name.addTextChangedListener(textWatcher);
         holder.licencePlate.addTextChangedListener(textWatcher);
+
+        holder.getName().setText("");
+        holder.getLicencePlate().setText("");
+        holder.getCountry().setSelection(0);
     }
 
     @Override
@@ -83,13 +73,26 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
         return cars.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         boolean isHint = true;
         int position = 0;
         String hint = RUS;
 
         final EditText name;
         final EditText licencePlate;
+
+        public EditText getName() {
+            return name;
+        }
+
+        public EditText getLicencePlate() {
+            return licencePlate;
+        }
+
+        public Spinner getCountry() {
+            return country;
+        }
+
         final Spinner country;
         final Button button;
 
@@ -105,9 +108,10 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
                     R.drawable.ru,
                     R.drawable.by,
                     R.drawable.ua,
-                    R.drawable.kz
+                    R.drawable.kz,
+                    R.drawable.us
             };
-            CountriesAdapter countriesAdapter = new CountriesAdapter(view.getContext(), countries, flags, android.R.color.transparent);
+            final CountriesAdapter countriesAdapter = new CountriesAdapter(view.getContext(), countries, flags, android.R.color.transparent);
             country.setAdapter(countriesAdapter);
             country.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -115,19 +119,18 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
                     switch (i) {
                         case 0 :
                             hint = RUS;
-                            //licencePlate.setMask(RUSmask);
                             break;
                         case 1 :
                             hint = BEL;
-                            //licencePlate.setMask(BELmask);
                             break;
                         case 2 :
                             hint = UKR;
-                            //licencePlate.setMask(UKRmask);
                             break;
                         case 3 :
                             hint = KAZ;
-                            //licencePlate.setMask(KAZmask);
+                            break;
+                        case 4 :
+                            hint = view.getResources().getString(R.string.licence_plate);
                     }
 
                     cars.get(getAdapterPosition()).setCountry(view.getResources().getStringArray(R.array.countries)[country.getSelectedItemPosition()]);
@@ -157,23 +160,21 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
                                             switch (position) {
                                                 case 0 :
                                                     hint = RUS;
-                                                    //licencePlate.setMask(RUSmask);
                                                     break;
                                                 case 1 :
                                                     hint = BEL;
-                                                    //licencePlate.setMask(BELmask);
                                                     break;
                                                 case 2 :
                                                     hint = UKR;
-                                                    //licencePlate.setMask(UKRmask);
                                                     break;
                                                 case 3 :
                                                     hint = KAZ;
-                                                    //licencePlate.setMask(KAZmask);
+                                                    break;
+                                                case 4 :
+                                                    hint = view.getResources().getString(R.string.licence_plate);
                                             }
 
                                             licencePlate.setHint(hint);
-                                            //licencePlate.setTextSize(35f);
                                             isHint = true;
                                         } catch (NullPointerException e){}
                                     }
@@ -181,8 +182,6 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
                         snackbar.setActionTextColor(view.getResources().getColor(R.color.colorAccent));
                         snackbar.show();
 
-                        //licencePlate.setTextSize(25f);
-                        //licencePlate.setMask("############");
                         licencePlate.setHint(view.getResources().getString(R.string.licence_plate));
                         isHint = false;
                     } else {
@@ -191,43 +190,39 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
                         switch (position) {
                             case 0 :
                                 hint = RUS;
-                                //licencePlate.setMask(RUSmask);
                                 break;
                             case 1 :
                                 hint = BEL;
-                                //licencePlate.setMask(BELmask);
                                 break;
                             case 2 :
                                 hint = UKR;
-                                //licencePlate.setMask(UKRmask);
                                 break;
                             case 3 :
                                 hint = KAZ;
-                                //licencePlate.setMask(KAZmask);
+                                break;
+                            case 4 :
+                                hint = view.getResources().getString(R.string.licence_plate);
                         }
 
                         licencePlate.setHint(hint);
-                        //licencePlate.setTextSize(35f);
                         isHint = true;
+
+                        Toast.makeText(view.getContext(), R.string.is_hint, Toast.LENGTH_SHORT).show();
                     }
 
                     return true;
                 }
             });
 
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    cars.remove(getAdapterPosition());
-                    notifyItemRemoved(getAdapterPosition());
-                    notifyItemRangeChanged(getAdapterPosition(), getItemCount());
+            button.setOnClickListener(this);
+        }
 
-                    name.setText("");
-                    licencePlate.setText("");
-                    licencePlate.setTextSize(35f);
-                    country.setSelection(0);
-                }
-            });
+
+        @Override
+        public void onClick(View view) {
+            cars.remove(getAdapterPosition());
+            notifyItemRemoved(getAdapterPosition());
+            notifyItemRangeChanged(getAdapterPosition(), getItemCount());
         }
     }
 }

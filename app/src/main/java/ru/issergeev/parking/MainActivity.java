@@ -9,15 +9,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
@@ -25,6 +29,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
@@ -346,7 +351,7 @@ public class MainActivity extends AppCompatActivity {
                     showDatePickerDialog(datePicker.getText().toString());
                     break;
                 case R.id.actionButton:
-                    carsList.add(new Cars(null, null, getResources().getStringArray(R.array.countries)[0]));
+                    carsList.add(new Cars("", "", getResources().getStringArray(R.array.countries)[0]));
                     carsAdapter.notifyItemInserted(carsAdapter.getItemCount());
                     break;
                 case R.id.finish:

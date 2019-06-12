@@ -6,7 +6,7 @@
     <string name="go">Начать!</string>
     <string name="fill">Все поля должны быть заполены!</string>
     <string name="check">Пожалуйста, убедитесь, что поля заполены верно!</string>
-    <string name="no_hint">Маска ввода отключена</string>
+    <string name="no_hint">Подсказка для ввода отключена!</string>
     <string name="undo">Отмена</string>
     <string name="no_cars">Машины не добавлены</string>
     <string name="no_cars_text">Ни одной машины не добавлено</string>
@@ -26,11 +26,14 @@
     <string name="add">Добавить ТС</string>
     <string name="no_template">Отключить маску ввода</string>
     <string name="no_template_message">Долго удерживайте поле номера автомобиля, чтобы отключить шаблон ввода</string>
+    <string name="permission_yes">Provide</string>
+    <string name="permission_no">Settings</string>
     <string-array name="countries">
         <item>Российская Федерация</item>
         <item>Республика Беларусь</item>
         <item>Украина</item>
         <item>Казахстан</item>
+        <item>Другое</item>
     </string-array>
     <string-array name="hours">
         <item>1 час</item>
@@ -84,4 +87,14 @@
     <string name="updated">Данные обновлены!</string>
     <string name="existed">Машина с указанным номером уже существует!</string>
     <string name="deleted">Машина удалена!</string>
+    <string name="stop">СТОП</string>
+    <string name="is_hint">Подсказка включена!</string>
+    <string name="permission">Разрешение</string>
+    <string name="save">Сохранить</string>
+    <string name="lastName">Фамилия</string>
+    <string name="no_permission_message">Данному приложение необходим доступ к отправке SMS для автоматической отправки сообщений. Если Вы хотите отправлять сообщения вручную, в настройках возможно отключить данную функцию. Вы хотите предоставить разрешение?</string>
+    <string name="change_send_method_message">Доступ к автоматической отправке SMS необходим исключительно для предоставления сервиса по оплате парковки и подтверждения оплаты без вмешательства пользователя. Приложение не сохранияет и не отправляет Ваши личные данные. Обратите внимание, без разрешения на работу с SMS приложение не сможет отслеживать подтверждение оплаты. Вы точно хотите перейти на ручной способ отправки?</string>
+    <string name="need_permission_message">Приложению необходим доступ к SMS для автоматической отправки сообщений об оплате парковки. Вы также можете выбрать ручной режим отправки в настройках приложения</string>
+    <string name="action_about">О приложении</string>
+    <string name="stop_parking">Отсановить</string>
 </resources>

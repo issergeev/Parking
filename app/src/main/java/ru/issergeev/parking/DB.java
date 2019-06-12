@@ -56,3 +56,4 @@ class DB extends SQLiteOpenHelper {
         onCreate(db);
     }
 }
+

@@ -56,7 +56,8 @@ public class CarEditActivity extends AppCompatActivity {
                 R.drawable.ru,
                 R.drawable.by,
                 R.drawable.ua,
-                R.drawable.kz
+                R.drawable.kz,
+                R.drawable.us
         };
         final CountriesAdapter countriesAdapter = new CountriesAdapter(CarEditActivity.this, countries, flags, R.color.background);
         country.setAdapter(countriesAdapter);
@@ -110,7 +111,7 @@ public class CarEditActivity extends AppCompatActivity {
                     }
 
                 if (correct) {
-                    sqlWorker.updateCar(strings[0], strings[2], strings[1], strings[3]);
+                    sqlWorker.updateCar(strings[0], strings[1], strings[2], strings[3]);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

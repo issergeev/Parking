@@ -45,3 +45,4 @@ public class Cars {
         this.thumbnail = thumbnail;
     }
 }
+

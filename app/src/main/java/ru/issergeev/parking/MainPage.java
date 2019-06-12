@@ -2,12 +2,17 @@ package ru.issergeev.parking;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,7 +25,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yandex.mapkit.MapKitFactory;
 
@@ -35,6 +39,7 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
     private final String userLastNamePrefs = " UserLastName";
 
     private int fragment = 0;
+    private int position = 0;
 
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
@@ -80,7 +85,8 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        navigationView.getMenu().getItem(0).setChecked(true);
+        position = preferences.getInt(displayedView, 0);
+        navigationView.getMenu().getItem(position).setChecked(true);
 
         profile = navigationView.getHeaderView(0).findViewById(R.id.profilePhoto);
         profile.setOnClickListener(new View.OnClickListener() {
@@ -122,19 +128,19 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
                 null, null);
 
         if (cursor != null && cursor.moveToFirst()) {
-            Log.d("log", cursor.getString(cursor.getColumnIndexOrThrow(DB.getKeyName())) + " " + cursor.getString(cursor.getColumnIndexOrThrow(DB.getKeyLicencePlate())) + " " + cursor.getString(cursor.getColumnIndexOrThrow(DB.getKeyCountry())));
-            list.add(new Cars(cursor.getString(cursor.getColumnIndexOrThrow(DB.getKeyName())), cursor.getString(cursor.getColumnIndexOrThrow(DB.getKeyLicencePlate())), cursor.getString(cursor.getColumnIndexOrThrow(DB.getKeyCountry()))));
+            list.add(new Cars(cursor.getString(cursor.getColumnIndexOrThrow(DB.getKeyName())),
+                    cursor.getString(cursor.getColumnIndexOrThrow(DB.getKeyLicencePlate())),
+                    cursor.getString(cursor.getColumnIndexOrThrow(DB.getKeyCountry()))));
 
             while (cursor.moveToNext()) {
-                Log.d("log", cursor.getString(cursor.getColumnIndexOrThrow(DB.getKeyName())) + " " + cursor.getString(cursor.getColumnIndexOrThrow(DB.getKeyLicencePlate())) + " " + cursor.getString(cursor.getColumnIndexOrThrow(DB.getKeyCountry())));
-                list.add(new Cars(cursor.getString(cursor.getColumnIndexOrThrow(DB.getKeyName())), cursor.getString(cursor.getColumnIndexOrThrow(DB.getKeyLicencePlate())), cursor.getString(cursor.getColumnIndexOrThrow(DB.getKeyCountry()))));
+                list.add(new Cars(cursor.getString(cursor.getColumnIndexOrThrow(DB.getKeyName())),
+                        cursor.getString(cursor.getColumnIndexOrThrow(DB.getKeyLicencePlate())),
+                        cursor.getString(cursor.getColumnIndexOrThrow(DB.getKeyCountry()))));
             }
         }
 
         assert cursor != null;
         cursor.close();
-
-
     }
 
     public static NavigationView getNavigationView() {
@@ -153,30 +159,27 @@ public class MainPage extends AppCompatActivity implements NavigationView.OnNavi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_page, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
+            return true;
+        } else if (id == R.id.action_about) {
+
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
         if (id == R.id.primary) {

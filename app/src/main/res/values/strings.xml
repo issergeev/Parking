@@ -5,7 +5,7 @@
     <string name="go">Get started!</string>
     <string name="fill">All fields required not to be empty!</string>
     <string name="check">Please, make sure all fields have the correct input!</string>
-    <string name="no_hint">Input mask disabled</string>
+    <string name="no_hint">Input hint disabled!</string>
     <string name="undo">Undo</string>
     <string name="no_cars">Cars not founded</string>
     <string name="no_cars_message">There are no cars added. Would you like to continue?</string>
@@ -25,11 +25,14 @@
     <string name="add">Add One More Car</string>
     <string name="no_template">Disable templates</string>
     <string name="no_template_message">You can disable licence plate templates by long pressing on this field</string>
+    <string name="permission_yes">Предоставить</string>
+    <string name="permission_no">Настройки</string>
     <string-array name="countries">
         <item>Russian Federation</item>
         <item>Republic of Belarus</item>
         <item>Ukraine</item>
         <item>Kazakhstan</item>
+        <item>Other</item>
     </string-array>
     <string-array name="hours">
         <item>1 hour</item>
@@ -84,4 +87,11 @@
     <string name="deleted">Car has been deleted!</string>
     <string name="save">Save</string>
     <string name="lastName">Last Name</string>
+    <string name="stop">Stop</string>
+    <string name="is_hint">Hint enabled!</string>
+    <string name="permission">Permission</string>
+    <string name="no_permission_message">This App needs a permission to provide your automatic SMS sending. In case you do not want the app automatically send and receive messages this function can be disabled in settings. Would you like to give a permission?</string>
+    <string name="need_permission_message">The App needs SMS sending permission to provide parking messages automatic sending service. You can turn on manual sending mode in App\'s settings</string>
+    <string name="action_about">About App</string>
+    <string name="stop_parking">Stop</string>
 </resources>

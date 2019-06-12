@@ -12,12 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 
 public class Fragment_Garage extends Fragment implements AdapterView.OnItemClickListener {
     private static RecyclerView recyclerView;
     private Button add;
+    private ImageView imageView;
 
     private CarListAdapter adapter;
 
@@ -32,6 +34,7 @@ public class Fragment_Garage extends Fragment implements AdapterView.OnItemClick
 
         recyclerView = view.findViewById(R.id.carsList);
         add = view.findViewById(R.id.add);
+        imageView = view.findViewById(R.id.image);
 
         adapter = new CarListAdapter(view.getContext(), list, this);
         recyclerView.setAdapter(adapter);
@@ -50,6 +53,12 @@ public class Fragment_Garage extends Fragment implements AdapterView.OnItemClick
     @Override
     public void onResume() {
         adapter.notifyDataSetChanged();
+
+        if (list.isEmpty()) {
+            imageView.setVisibility(View.VISIBLE);
+        } else
+            imageView.setVisibility(View.GONE);
+
         super.onResume();
     }
 
