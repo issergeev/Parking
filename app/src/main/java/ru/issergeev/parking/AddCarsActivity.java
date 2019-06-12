@@ -64,7 +64,7 @@ public class AddCarsActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             rawList = new ArrayList<>();
-
+            
             sqlWorker.open();
 
             if (carsList.size() == 0) {
