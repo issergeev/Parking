@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="@dimen/layoutMargin"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorAccent">
 
     <ImageView
         android:id="@+id/garage"
@@ -42,5 +42,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:src="@drawable/plus"
+        app:backgroundTint="@color/popupBackground"
         app:fabSize="auto"/>
 </RelativeLayout>

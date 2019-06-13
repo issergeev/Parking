@@ -56,9 +56,11 @@ public class Fragment_Payment extends Fragment {
 
     private ArrayList<Cars> list;
 
+    private RelativeLayout rootLayout;
     private RelativeLayout carSpinner;
     private Spinner hoursSpinner, licencePlateSpinner;
     private Button pay;
+
     private MaskedEditText parkingID;
 
     private CarRowAdapter adapter;
@@ -70,6 +72,8 @@ public class Fragment_Payment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.payment_fragment, container, false);
+
+        rootLayout = view.findViewById(R.id.rootLayout);
 
         sharedPreferences = getActivity().getSharedPreferences(appData, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -139,6 +143,8 @@ public class Fragment_Payment extends Fragment {
             @SuppressLint("HandlerLeak")
             @Override
             public void onClick(View view) {
+                rootLayout.setClickable(false);
+
                 if (PermissionChecker.checkSelfPermission(getActivity(), Manifest.permission.SEND_SMS) == -1) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         alertDialog = new AlertDialog.Builder(getActivity(),
@@ -165,7 +171,6 @@ public class Fragment_Payment extends Fragment {
                                                          @Override
                                                          public void onShow(DialogInterface dialogInterface) {
                                                              Button cancelButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-
                                                              cancelButton.setTextColor(getResources()
                                                                      .getColor(android.R.color.holo_green_light));
                                                          }
@@ -183,12 +188,15 @@ public class Fragment_Payment extends Fragment {
                         // Permission has already been granted
                         if (Character.isDigit(parkingID.getText().charAt(3))) {
                             if (!isEmpty) {
-                                String payString = parkingID.getRawText() + "*" + adapter.getLicencePlate(licencePlateSpinner.getSelectedItemPosition()) + "*" + hoursSpinner.getSelectedItem().toString().charAt(0);
-                                Log.d("log", payString);
-                                String data = adapter.getLicencePlate(licencePlateSpinner.getSelectedItemPosition()) + "-" + hoursSpinner.getSelectedItem().toString().charAt(0);
-                                SmsManager.getDefault().sendTextMessage(number, null, payString, null, null);
-                                getFragmentManager().beginTransaction().add(R.id.main, new Choice_Fragment()).addToBackStack("replace").commit();
-//                                startActivity(new Intent(view.getContext(), ParkingActivity.class).putExtra("Data", data));
+                                Bundle data = new Bundle();
+                                data.putString("parkingID", parkingID.getText().toString());
+                                data.putString("licencePlate", adapter.getLicencePlate(licencePlateSpinner.getSelectedItemPosition()));
+                                data.putString("hours", String.valueOf(getResources().getStringArray(R.array.hours)[hoursSpinner.getSelectedItemPosition()].charAt(0)));
+
+                                Choice_Fragment fragment = new Choice_Fragment();
+                                fragment.setArguments(data);
+
+                                getFragmentManager().beginTransaction().add(R.id.main, fragment).addToBackStack("replace").commit();
                             } else {
                                 Toast.makeText(view.getContext(), getResources().getString(R.string.no_cars_add), Toast.LENGTH_LONG).show();
                             }

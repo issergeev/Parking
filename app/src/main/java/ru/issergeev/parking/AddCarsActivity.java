@@ -1,5 +1,6 @@
 package ru.issergeev.parking;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -43,8 +44,12 @@ public class AddCarsActivity extends AppCompatActivity {
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                carsList.add(new Cars(null, null, getResources().getStringArray(R.array.countries)[0]));
-                carsAdapter.notifyItemInserted(carsAdapter.getItemCount());
+                if (carsList.size() < 10) {
+                    carsList.add(new Cars(null, null, getResources().getStringArray(R.array.countries)[0]));
+                    carsAdapter.notifyItemInserted(carsAdapter.getItemCount());
+                } else {
+                    Toast.makeText(AddCarsActivity.this, R.string.more_than_ten, Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -60,11 +65,12 @@ public class AddCarsActivity extends AppCompatActivity {
         sqlWorker = new SQLWorker(this);
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class Writer extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... voids) {
             rawList = new ArrayList<>();
-            
+
             sqlWorker.open();
 
             if (carsList.size() == 0) {
@@ -126,7 +132,7 @@ public class AddCarsActivity extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(AddCarsActivity.this, cars.getName() + " with licence plate " + cars.getLicence_plate() + " is already exist!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(AddCarsActivity.this, cars.getName() + getString(R.string.with_licence_plate) + cars.getLicence_plate() + getString(R.string.is_already_exist), Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }

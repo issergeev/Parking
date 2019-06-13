@@ -5,14 +5,14 @@
     android:layout_height="match_parent"
     android:padding="25dp"
     android:orientation="horizontal"
-    android:background="@color/background">
+    android:background="@color/colorAccent">
 
     <ImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/mainLayout"
-        android:layout_margin="60dp"
+        android:layout_margin="40dp"
         android:src="@drawable/car"/>
 
     <RelativeLayout
@@ -30,6 +30,8 @@
             android:layout_below="@id/garage"
             android:inputType="text"
             android:hint="@string/car_name"
+            android:textColor="@color/textColor"
+            android:textColorHint="@color/textColor"
             android:maxLength="20"
             android:gravity="center"
             android:textSize="20sp"
@@ -44,6 +46,8 @@
             android:layout_below="@id/carName"
             android:inputType="textCapCharacters"
             android:hint="А 777 МР 777"
+            android:textColor="@color/textColor"
+            android:textColorHint="@color/textColor"
             android:typeface="monospace"
             android:digits="0123456789АВЕКМНОРСТУХ"
             android:maxLength="12"
@@ -67,11 +71,10 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
-                android:background="@android:color/transparent"
                 android:gravity="center"
                 android:layout_marginStart="5dp"
                 android:spinnerMode="dropdown"
-                android:popupBackground="@color/popupBackground"/>
+                android:popupBackground="@color/colorPrimary"/>
 
             <ImageView
                 android:layout_width="60dp"

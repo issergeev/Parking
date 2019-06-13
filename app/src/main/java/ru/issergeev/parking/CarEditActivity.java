@@ -59,7 +59,7 @@ public class CarEditActivity extends AppCompatActivity {
                 R.drawable.kz,
                 R.drawable.us
         };
-        final CountriesAdapter countriesAdapter = new CountriesAdapter(CarEditActivity.this, countries, flags, R.color.background);
+        final CountriesAdapter countriesAdapter = new CountriesAdapter(CarEditActivity.this, countries, flags, R.color.transparent);
         country.setAdapter(countriesAdapter);
 
         name.setText(intent.getStringExtra("Name"));

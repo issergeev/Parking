@@ -31,6 +31,8 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
     private LayoutInflater inflater;
     private List<Cars> cars;
 
+    private CarsAdapter adapter;
+
     CarsAdapter(Context context, List<Cars> cars) {
         this.cars = cars;
         this.inflater = LayoutInflater.from(context);
@@ -39,6 +41,7 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
     @Override
     public CarsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.car_layout, parent, false);
+        adapter = this;
         return new ViewHolder(view);
     }
 
@@ -132,10 +135,7 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
                         case 4 :
                             hint = view.getResources().getString(R.string.licence_plate);
                     }
-
                     cars.get(getAdapterPosition()).setCountry(view.getResources().getStringArray(R.array.countries)[country.getSelectedItemPosition()]);
-
-                    Log.d("select", "Car with number - " + getAdapterPosition() + " set country - " + view.getResources().getStringArray(R.array.countries)[country.getSelectedItemPosition()]);
 
                     licencePlate.setHint(hint);
                 }
@@ -185,6 +185,8 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
                         licencePlate.setHint(view.getResources().getString(R.string.licence_plate));
                         isHint = false;
                     } else {
+                        Snackbar snackbar = Snackbar.make(view, view.getResources().getString(R.string.is_hint), BaseTransientBottomBar.LENGTH_LONG);
+                        snackbar.show();
                         position = country.getSelectedItemPosition();
 
                         switch (position) {
@@ -206,8 +208,6 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
 
                         licencePlate.setHint(hint);
                         isHint = true;
-
-                        Toast.makeText(view.getContext(), R.string.is_hint, Toast.LENGTH_SHORT).show();
                     }
 
                     return true;
@@ -220,9 +220,11 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.ViewHolder> {
 
         @Override
         public void onClick(View view) {
-            cars.remove(getAdapterPosition());
-            notifyItemRemoved(getAdapterPosition());
-            notifyItemRangeChanged(getAdapterPosition(), getItemCount());
+//            getName().setText("");
+//            getLicencePlate().setText("");
+//            getCountry().setSelection(0);
+            adapter.cars.remove(getAdapterPosition());
+            adapter.notifyItemRemoved(getAdapterPosition());
         }
     }
 }

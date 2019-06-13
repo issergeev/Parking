@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    android:id="@+id/rootLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,21 +8,21 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainPage"
-    tools:showIn="@layout/app_bar_main_page"
     android:padding="@dimen/layoutMargin"
+    tools:showIn="@layout/app_bar_main_page"
     android:orientation="vertical"
     android:background="@color/colorAccent">
 
     <TextView
         android:id="@+id/text"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_above="@id/paymentInterface"
         android:layout_marginBottom="10dp"
         android:text="@string/payment"
         android:textSize="30sp"
         android:textColor="@android:color/holo_green_light"
-        android:gravity="center"/>
+        android:gravity="center_horizontal"/>
 
     <LinearLayout
         android:id="@+id/paymentInterface"
@@ -38,6 +39,7 @@
             android:gravity="center"
             android:hint="@string/parking_number"
             app:allowed_chars="0123456789"
+            android:textColorHint="@color/textColor"
             android:inputType="number"
             android:typeface="monospace"
             android:textColor="@android:color/holo_green_light"
@@ -120,22 +122,9 @@
         android:layout_marginEnd="@dimen/avgMargin"
         android:layout_marginTop="@dimen/avgMargin"
         android:layout_marginBottom="15dp"
-        android:layout_above="@id/stopButton"
-        android:text="@string/pay"
+        android:layout_alignParentBottom="true"
+        android:text="@string/manage"
         android:textSize="20sp"
         android:textColor="@android:color/holo_green_light"
         android:background="@drawable/green_buttons_shape"/>
-
-    <Button
-        android:id="@+id/stopButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/avgMargin"
-        android:layout_marginEnd="@dimen/avgMargin"
-        android:layout_marginBottom="5dp"
-        android:layout_alignParentBottom="true"
-        android:text="@string/stop_parking"
-        android:textSize="20sp"
-        android:textColor="@android:color/holo_red_light"
-        android:background="@drawable/delete_buttons_shape"/>
 </RelativeLayout>

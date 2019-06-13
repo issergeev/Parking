@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/settingsColor"
     android:padding="@dimen/layoutMargin">
 
     <ImageView
@@ -22,8 +22,10 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:hint="@string/name"
+        android:maxLength="30"
+        android:digits="@string/allowed_chars"
         android:inputType="textPersonName"
-        android:textColorHint="@android:color/white"
+        android:textColorHint="@color/textColor"
         android:textColor="@color/textColor"
         android:gravity="center"/>
 
@@ -34,8 +36,10 @@
         android:layout_marginTop="5dp"
         android:layout_below="@id/name"
         android:hint="@string/lastName"
+        android:digits="@string/allowed_chars"
+        android:maxLength="50"
         android:inputType="textPersonName"
-        android:textColorHint="@android:color/white"
+        android:textColorHint="@color/textColor"
         android:textColor="@color/textColor"
         android:gravity="center"/>
 
@@ -47,7 +51,7 @@
         android:layout_below="@id/lastName"
         android:background="@drawable/no_background_buttons_shape"
         android:text="@string/date"
-        android:textColor="@android:color/white"/>
+        android:textColor="@color/textColor"/>
 
     <Button
         android:id="@+id/save"
@@ -60,5 +64,5 @@
         android:gravity="center"
         android:layout_centerHorizontal="true"
         android:text="@string/save"
-        android:textColor="@color/colorAccent"/>
+        android:textColor="@color/textColor"/>
 </RelativeLayout>

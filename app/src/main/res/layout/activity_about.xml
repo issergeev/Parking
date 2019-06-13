@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginTop="30dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".AboutActivity">
+
+        <LinearLayout
+            android:id="@+id/main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:weightSum="2">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/parking"/>
+
+            <TextView
+                android:id="@+id/version"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColor="@android:color/darker_gray"
+                android:text="Parking\nVersion: "/>
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/licence"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/main"
+            android:autoLink="web"
+            android:textColorLink="#008EFF"
+            android:linksClickable="true"
+            android:textSize="15sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="В приложении используется API Яндекс.Карты для предоставления функционала работы с картой."/>
+
+        <TextView
+            android:id="@+id/yandexTerms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/licence"
+            android:textStyle="bold"
+            android:textColor="#008EFF"
+            android:textSize="15sp"
+            android:text="Условия использования сервиса Яндекс.Карты"/>
+
+        <TextView
+            android:id="@+id/licence2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/yandexTerms"
+            android:autoLink="web"
+            android:textColorLink="#008EFF"
+            android:linksClickable="true"
+            android:textSize="15sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="\nВ приложении используются изображения, распространяемые свободно."/>
+
+        <TextView
+            android:id="@+id/picturesTerms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/licence2"
+            android:textStyle="bold"
+            android:textColor="#008EFF"
+            android:textSize="15sp"
+            android:text="Оригиналы используемых ресурсов"/>
+
+        <TextView
+            android:id="@+id/licence3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/picturesTerms"
+            android:autoLink="web"
+            android:textColorLink="#008EFF"
+            android:linksClickable="true"
+            android:textSize="15sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="\nВ приложении используется маска ввода, выложенная в свободном доступе на GitHub."/>
+
+        <TextView
+            android:id="@+id/maskTerms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/licence3"
+            android:textStyle="bold"
+            android:textColor="#008EFF"
+            android:textSize="15sp"
+            android:text="Лицензионное соглашение"/>
+
+        <TextView
+            android:id="@+id/licenceTerms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/maskTerms"
+            android:autoLink="web"
+            android:textColorLink="#008EFF"
+            android:linksClickable="true"
+            android:textSize="15sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="\nМобильное приложение Parking предоставляет функционал автоматизированного формирования и отправки SMS-сообщений для оплаты парковки в городе Москва. Для корректной работы требуется предоставить разрешения на отправку и обработку сообщений. Приложение не отправляет персональные данные пользователей на сервера и не передает их третьим лицам. Обрабатываются исключительно сообщения, поступающие с коротких номеров.\nУслуги, реализуемые данным приложением, предоставляется без гарантий. Приложение обладает функцией автоматического отслеживания подтверждений проведения оплаты, однако в случае возникновения сомнений рекомендуется проверять наличие отправленных сообщений и полученных подтверждений в системном SMS-приложении. Разработчик не связан с операторами парковочного пространства. За отправку SMS-сообщений может взиматься дополнительная плата в соответствии с Вашим тарифным планом."/>
+    </RelativeLayout>
+</ScrollView>

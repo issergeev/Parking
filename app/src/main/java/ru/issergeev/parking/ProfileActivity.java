@@ -129,14 +129,12 @@ public class ProfileActivity extends AppCompatActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.save :
-                    if (correctDate) {
+                    if (correctDate && userName.getText().toString().trim().length() > 1) {
                         save.setEnabled(false);
                         editor.putString(userNamePrefs, userName.getText().toString());
                         editor.putString(userLastNamePrefs, lastName.getText().toString());
                         editor.putString(userAge, agePicker.getText().toString());
                         editor.apply();
-                        //Toast.makeText(ProfileActivity.this, R.string.updated, Toast.LENGTH_SHORT).show();
-                        Toast.makeText(ProfileActivity.this, lastName.getText().toString(), Toast.LENGTH_SHORT).show();
                         finish();
                     } else
                         Toast.makeText(ProfileActivity.this, R.string.check, Toast.LENGTH_SHORT).show();

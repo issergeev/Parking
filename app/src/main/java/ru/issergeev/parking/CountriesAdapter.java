@@ -45,6 +45,7 @@ public class CountriesAdapter extends ArrayAdapter<String> {
             mViewHolder.flag = convertView.findViewById(R.id.flag);
             mViewHolder.name = convertView.findViewById(R.id.name);
             convertView.setTag(mViewHolder);
+            convertView.setBackgroundColor(convertView.getResources().getColor(R.color.popupBackground));
         } else {
             mViewHolder = (ViewHolder) convertView.getTag();
         }

@@ -4,14 +4,15 @@
     <string name="hello">Добро пожаловать!</string>
     <string name="help">Для перемещения между вкладками используйте свайпы</string>
     <string name="go">Начать!</string>
-    <string name="fill">Все поля должны быть заполены!</string>
-    <string name="check">Пожалуйста, убедитесь, что поля заполены верно!</string>
+    <string name="fill">Все поля должны быть заполнены!</string>
+    <string name="check">Пожалуйста, убедитесь, что поля заполнены верно!</string>
     <string name="no_hint">Подсказка для ввода отключена!</string>
     <string name="undo">Отмена</string>
     <string name="no_cars">Машины не добавлены</string>
     <string name="no_cars_text">Ни одной машины не добавлено</string>
     <string name="no_cars_add">Ни одной машины не найдено. Вы можете добавить их через страницу \"Мой гараж\"</string>
     <string name="no_cars_garage">Ни одной машины не добавлено. Добавить сейчас?</string>
+    <string name="allowed_chars">АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЫЬЪЫЮЯабвгдеёжзийклмнопрстуфхцчшщъьыэюяABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz</string>
 
     //GUI
     <string name="name">Имя</string>
@@ -26,8 +27,8 @@
     <string name="add">Добавить ТС</string>
     <string name="no_template">Отключить маску ввода</string>
     <string name="no_template_message">Долго удерживайте поле номера автомобиля, чтобы отключить шаблон ввода</string>
-    <string name="permission_yes">Provide</string>
-    <string name="permission_no">Settings</string>
+    <string name="permission_yes">Предоставить</string>
+    <string name="permission_no">Настройки</string>
     <string-array name="countries">
         <item>Российская Федерация</item>
         <item>Республика Беларусь</item>
@@ -51,7 +52,7 @@
     </string-array>
     <string name="payment">Оплата парковки</string>
     <string name="parkingNumber">Номер парковки</string>
-    <string name="pay">Оплатить</string>
+    <string name="manage">Управлять</string>
     <string name="myGarage">Мой гараж</string>
 
     <string name="no_cars_message">Не добавлено ни одной машины. Вы хотите продолжить?</string>
@@ -82,7 +83,7 @@
     <string name="go_to_garage">Добавить</string>
     <string name="cancel">Отмена</string>
     <string name="add_button">Добавить</string>
-    <string name="duplicate_fields">Название или номер машмны неуникальны</string>
+    <string name="duplicate_fields">Название или номер машины неуникальны</string>
     <string name="updateCar">Сохранить</string>
     <string name="updated">Данные обновлены!</string>
     <string name="existed">Машина с указанным номером уже существует!</string>
@@ -92,9 +93,33 @@
     <string name="permission">Разрешение</string>
     <string name="save">Сохранить</string>
     <string name="lastName">Фамилия</string>
-    <string name="no_permission_message">Данному приложение необходим доступ к отправке SMS для автоматической отправки сообщений. Если Вы хотите отправлять сообщения вручную, в настройках возможно отключить данную функцию. Вы хотите предоставить разрешение?</string>
-    <string name="change_send_method_message">Доступ к автоматической отправке SMS необходим исключительно для предоставления сервиса по оплате парковки и подтверждения оплаты без вмешательства пользователя. Приложение не сохранияет и не отправляет Ваши личные данные. Обратите внимание, без разрешения на работу с SMS приложение не сможет отслеживать подтверждение оплаты. Вы точно хотите перейти на ручной способ отправки?</string>
+    <string name="no_permission_message">Данному приложение необходим доступ к отправке SMS для автоматической отправки сообщений. Если Вы хотите отправлять сообщения вручную, в настройках возможно включить соответствующую функцию. Вы хотите предоставить разрешение для автоматической отправки?</string>
     <string name="need_permission_message">Приложению необходим доступ к SMS для автоматической отправки сообщений об оплате парковки. Вы также можете выбрать ручной режим отправки в настройках приложения</string>
     <string name="action_about">О приложении</string>
-    <string name="stop_parking">Отсановить</string>
+    <string name="stop_parking">Остановить</string>
+
+    <string name="MOS_PARKING">7757</string>
+    <string name="warning">Внимание</string>
+    <string name="payment_difficulties">Возникли сложности с проведением платежа. Возможно, требуется подтверждение оплаты за парковку или на счете недостаточно средств для проведения транзакции. Пожалуйста, проверьте SMS-сообщения, чтобы узнать подробнее</string>
+    <string name="no_pay_required">Оплата не требуется</string>
+    <string name="no_pay_message">Оплата парковочной сессии не требуется. Возможно, Вы припарковались в выхдной или праздничный день. Пожалуйста, проверьте SMS-сообщения, чтобы узнать подробнее</string>
+    <string name="confirmed">Подтверждено</string>
+    <string name="confirmation_received">Получено подтверждение оплаты за парковку</string>
+    <string name="parking_notification">Уведомление о парковке</string>
+    <string name="more_than_ten">За один раз можно добавить не более 10 транспортных средств</string>
+    <string name="end">Парковка завершена</string>
+    <string name="end_message">Парковочная сессия успешно завершена</string>
+    <string name="send">SMS</string>
+    <string name="send_message">Для выполнения операции будет сформировоно SMS-сообщение с текстом:</string>
+    <string name="message_end">будет отправлено на номер 7757. Приложение может некорректно обрабатывать подтверждения при наличии активных оплаченных сессей на несколько автомобилей. В случае получения сообщения с посьбой подтвердить платеж, если приложение автоматически не подтвердило транзакцию, следуйте инструкциям из сообщения.</string>
+    <string name="no_sessions">Активные сессии отсутствуют</string>
+    <string name="no_sessions_message">Активные парковочные сессии не обнаружены!</string>
+    <string name="proceed">Продолжить</string>
+    <string name="sent">Сообщение отправлено!</string>
+    <string name="sms">Автоматическая работа с SMS</string>
+    <string name="sms_redirecting">Перенаправление в системное приложение</string>
+    <string name="help_title">Обратите внимание</string>
+    <string name="help_message">В случае возникновения сложностей с отправкой SMS для проведения оплаты, отключите автоматичекую отправку в настройках приложения. Также Вы можете проверить в настройках устройства наличие разрешения на обработку SMS, которое необходимо для автоматической отправки СМС</string>
+    <string name="with_licence_plate">с номером</string>
+    <string name="is_already_exist">уже существует!</string>
 </resources>

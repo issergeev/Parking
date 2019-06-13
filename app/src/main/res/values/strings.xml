@@ -11,6 +11,7 @@
     <string name="no_cars_message">There are no cars added. Would you like to continue?</string>
     <string name="no_cars_add">There are no cars founded. You can add them from \"Garage\" menu</string>
     <string name="no_cars_garage">There are no cars added. Would you like to add some?</string>
+    <string name="allowed_chars">АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЫЬЪЫЮЯабвгдеёжзийклмнопрстуфхцчшщъьыэюяABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz</string>
 
     //GUI
     <string name="name">First Name</string>
@@ -25,8 +26,8 @@
     <string name="add">Add One More Car</string>
     <string name="no_template">Disable templates</string>
     <string name="no_template_message">You can disable licence plate templates by long pressing on this field</string>
-    <string name="permission_yes">Предоставить</string>
-    <string name="permission_no">Настройки</string>
+    <string name="permission_yes">Provide</string>
+    <string name="permission_no">Settings</string>
     <string-array name="countries">
         <item>Russian Federation</item>
         <item>Republic of Belarus</item>
@@ -50,7 +51,7 @@
     </string-array>
     <string name="payment">Pay for parking</string>
     <string name="parkingNumber">Parking number</string>
-    <string name="pay">Pay</string>
+    <string name="manage">Manage</string>
     <string name="myGarage">My garage</string>
     <string name="no_car_name">Some car does not have a name</string>
     <string name="no_licence_plate">Some car does not have a licence plate</string>
@@ -94,4 +95,29 @@
     <string name="need_permission_message">The App needs SMS sending permission to provide parking messages automatic sending service. You can turn on manual sending mode in App\'s settings</string>
     <string name="action_about">About App</string>
     <string name="stop_parking">Stop</string>
+
+    <string name="MOS_PARKING">7757</string>
+    <string name="warning">Warning</string>
+    <string name="payment_difficulties">There were some difficulties regarding your payment. It can be connected with leak of money on parking account or payment confirmation needed. Please, check SMS for more information</string>
+    <string name="no_pay_required">No payment required</string>
+    <string name="no_pay_message">It is unneeded to pay for parking. Probably, you park in weekends or holiday. Please, check SMS for more information</string>
+    <string name="confirmed">Confirmed</string>
+    <string name="confirmation_received">Payment confirmation received</string>
+    <string name="parking_notification">Parking notification</string>
+    <string name="more_than_ten">It is possible to add no more than 10 cars at once</string>
+    <string name="end">Parking finished</string>
+    <string name="end_message">Parking session has been finished successfully</string>
+    <string name="send">SMS</string>
+    <string name="send_message">The SMS will be created with text: </string>
+    <string name="message_end">will be sent to 7757. In case there are several active sessions the App cannot process them in the right way. If a message with confirmation request received, in case the App would not do it by it\'s own, follow instructions from the message you got.</string>
+    <string name="no_sessions">No active sessions</string>
+    <string name="no_sessions_message">There are no active parking sessions!</string>
+    <string name="proceed">Proceed</string>
+    <string name="sent">Message sent!</string>
+    <string name="sms">Automatic SMS processing</string>
+    <string name="sms_redirecting">Redirecting to system SMS application</string>
+    <string name="help_title">Be aware</string>
+    <string name="help_message">In case there are troubles with sending messages process, disable automatic sending in App settings. However, you can provide SMS permission from device settings</string>
+    <string name="with_licence_plate">with licence plate</string>
+    <string name="is_already_exist">is already exist!</string>
 </resources>

@@ -48,7 +48,7 @@
         android:textColor="@color/textColor"
         android:typeface="monospace"
         android:digits="0123456789АВЕКМНОРСТУХ"
-        android:maxLength="12"
+        android:maxLength="15"
         android:gravity="center"
         android:background="@drawable/buttons_shape"/>
 
