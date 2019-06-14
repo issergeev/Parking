@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 public class AboutActivity extends AppCompatActivity {
-    TextView version, yandexTerms, picturesTerms, maskTerms;
+    TextView version, yandexTerms, picturesTerms, maskTerms, licenceTerms;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +48,14 @@ public class AboutActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent maskIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/egslava/edittext-mask/blob/master/LICENSE"));
+                startActivity(maskIntent);
+            }
+        });
+        licenceTerms = findViewById(R.id.maskLicense);
+        licenceTerms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent maskIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/issergeev/Parking/wiki/Privacy-Policy"));
                 startActivity(maskIntent);
             }
         });

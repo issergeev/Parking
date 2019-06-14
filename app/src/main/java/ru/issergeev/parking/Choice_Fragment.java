@@ -77,7 +77,6 @@ public class Choice_Fragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.add:
                 SMS = new StringBuilder("Х" + hours);
-
                 break;
             case R.id.stop :
                 SMS = new StringBuilder("С");
