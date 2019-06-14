@@ -2,6 +2,7 @@ package ru.issergeev.parking;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -74,6 +75,7 @@ public class CarEditActivity extends AppCompatActivity {
                 save.setEnabled(false);
 
                 new Writer().execute(intent.getStringExtra("LicencePlate"), name.getText().toString(), licencePlate.getText().toString(), getResources().getStringArray(R.array.countries)[country.getSelectedItemPosition()], getResources().getString(R.string.updateCar));
+                Toast.makeText(CarEditActivity.this, getString(R.string.vehicle) + " " + getString(R.string.with_licence_plate) + " " + licencePlate.getText().toString() + " " + getString(R.string.is_already_exist), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -82,7 +84,11 @@ public class CarEditActivity extends AppCompatActivity {
             public void onClick(View view) {
                 delete.setEnabled(false);
 
-                new Writer().execute(intent.getStringExtra("LicencePlate"), name.getText().toString(), licencePlate.getText().toString(), getResources().getStringArray(R.array.countries)[country.getSelectedItemPosition()], getResources().getString(R.string.deleteCar));
+                try {
+                    new Writer().execute(intent.getStringExtra("LicencePlate"), name.getText().toString(), licencePlate.getText().toString(), getResources().getStringArray(R.array.countries)[country.getSelectedItemPosition()], getResources().getString(R.string.deleteCar));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -111,13 +117,24 @@ public class CarEditActivity extends AppCompatActivity {
                     }
 
                 if (correct) {
-                    sqlWorker.updateCar(strings[0], strings[1], strings[2], strings[3]);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(CarEditActivity.this, R.string.updated, Toast.LENGTH_LONG).show();
-                        }
-                    });
+                    try {
+                        sqlWorker.updateCar(strings[0], strings[1], strings[2], strings[3]);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(CarEditActivity.this, R.string.updated, Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    } catch (SQLiteConstraintException e) {
+                        e.printStackTrace();
+                        final String licencePlate = strings[2];
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(CarEditActivity.this, getString(R.string.vehicle) + " " + getString(R.string.with_licence_plate) + " " + licencePlate + " " + getString(R.string.is_already_exist), Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
                 }
             } else {
                 sqlWorker.deleteCar(strings[0]);

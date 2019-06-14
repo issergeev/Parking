@@ -37,6 +37,7 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
         });
+        sms.setEnabled(true);
     }
 
     @Override

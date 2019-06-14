@@ -113,11 +113,12 @@
     <string name="no_sessions">No active sessions</string>
     <string name="no_sessions_message">There are no active parking sessions!</string>
     <string name="proceed">Proceed</string>
-    <string name="sent">Message sent!</string>
+    <string name="sent">Message sent! Check system SMS App</string>
     <string name="sms">Automatic SMS processing</string>
     <string name="sms_redirecting">Redirecting to system SMS application</string>
     <string name="help_title">Be aware</string>
     <string name="help_message">In case there are troubles with sending messages process, disable automatic sending in App settings. However, you can provide SMS permission from device settings</string>
     <string name="with_licence_plate">with licence plate</string>
     <string name="is_already_exist">is already exist!</string>
+    <string name="vehicle">Vehicle</string>
 </resources>

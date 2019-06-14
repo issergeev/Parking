@@ -44,7 +44,7 @@ public class SMSMonitor extends BroadcastReceiver {
                 }
 
                 context.startService(service);
-                abortBroadcast();
+                //abortBroadcast();
             }
         }
     }

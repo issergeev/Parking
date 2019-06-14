@@ -132,7 +132,7 @@ public class AddCarsActivity extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(AddCarsActivity.this, cars.getName() + getString(R.string.with_licence_plate) + cars.getLicence_plate() + getString(R.string.is_already_exist), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(AddCarsActivity.this, getString(R.string.vehicle) + " " + getString(R.string.with_licence_plate) + " " + cars.getLicence_plate() + " " + getString(R.string.is_already_exist), Toast.LENGTH_LONG).show();
                                 }
                             });
                         }
